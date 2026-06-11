@@ -7,8 +7,8 @@ Personal pi preferences and configuration package.
 | Resource | Source | Description |
 |----------|--------|-------------|
 | **Extension** | `extensions/file-hash-guard.ts` | Guards write/edit calls — warns if a file changed externally since the agent last read it, and asks for confirmation before overwriting. |
-| **Prompt template** | `prompts/response-style.md` | Response style guidelines + co-author convention. Use `/response-style` in the editor to inject into a conversation. |
-| **Skill** | `skills/planning/SKILL.md` | Interview-driven session planning with git branching, worktrees, and verifiable checkpoints. Use `/skill:planning` at the start of a session. |
+| **Extension** | `extensions/response-style.ts` | Automatically injects response style guidelines and co-author convention into every session's system prompt. |
+| **Skill** | `skills/planning/SKILL.md` | 5-phase feature workflow with planning, verification, architectural prototyping, implementation, and cleanup. Uses git branching, worktrees, and optional multi-agent review. Use `/skill:planning` at the start of a feature. |
 
 ## Installation
 
@@ -22,6 +22,16 @@ Or from within the repo:
 pi install .
 ```
 
+### First-time setup
+
+If you previously had `~/.pi/agent/APPEND_SYSTEM.md` with the response style guidelines, **remove it** after installing this package — the `response-style.ts` extension handles it automatically and having both would duplicate the guidelines:
+
+```bash
+rm ~/.pi/agent/APPEND_SYSTEM.md
+```
+
+Then run `/reload` in pi.
+
 ## Usage
 
 After installation, the planning skill is available via:
@@ -30,13 +40,7 @@ After installation, the planning skill is available via:
 /skill:planning
 ```
 
-The agent will interview you to define a goal, create a feature branch with a worktree, build a plan with small verifiable checkpoints, and iterate through the units of work one at a time.
-
-The response style prompt template is available via:
-
-```
-/response-style
-```
+The response style guidelines are active automatically in every session — no action needed.
 
 ## Package resources
 

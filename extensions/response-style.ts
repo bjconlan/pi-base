@@ -1,7 +1,18 @@
----
-description: Apply response style guidelines and co-author conventions
-argument-hint: ""
----
+/**
+ * Response Style Extension
+ *
+ * Automatically appends response style guidelines and co-author convention
+ * to the system prompt at the start of every session.
+ *
+ * This replaces the need for APPEND_SYSTEM.md or the /response-style prompt
+ * template — the guidelines are always present when this package is installed.
+ */
+
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+export default function (pi: ExtensionAPI) {
+  pi.on("before_agent_start", async (event, ctx) => {
+    const guidelines = `
 ## Response Style Guidelines
 
 - Use measured, precise language when describing changes or results. Avoid hyperbole, excessive enthusiasm, or promotional language.
@@ -15,8 +26,15 @@ argument-hint: ""
 
 When asked to be listed as a co-author on a git commit, use the format:
 
-```
-Co-authored-by: ${model}/Pi Coding Agent <pi+${model}@earendil-works>
-```
+\`\`\`
+Co-authored-by: \${model}/Pi Coding Agent <pi+\${model}@earendil-works>
+\`\`\`
 
-Where `${model}` is the model identifier from the active provider (e.g. `deepseek-v4-flash`).
+Where \${model} is the model identifier from the active provider (e.g. \`deepseek-v4-flash\`).
+`;
+
+    return {
+      systemPrompt: event.systemPrompt + guidelines,
+    };
+  });
+}
