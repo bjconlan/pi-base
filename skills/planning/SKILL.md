@@ -11,6 +11,22 @@ description: |
 
 When activated, follow these steps in order. Do not skip ahead.
 
+### Branch Type Awareness
+
+Check the current branch prefix to determine which stages apply:
+
+| Branch type | Workflow |
+|-------------|----------|
+| `feature/`  | Full 3-stage workflow (Planning → Implementation → Review) |
+| `experiment/` | Full 3-stage workflow, but lighter — skip second-agent reviews, minimise documentation |
+| `fix/`      | Stage 2 (Implementation) only — skip planning, lightweight review |
+| `hotfix/`   | Stage 2 (Implementation) only — skip planning, minimal review, fast track |
+| `chore/`    | Stage 2 (Implementation) only — skip planning and outcomes doc |
+| `docs/`     | Stage 2 (Implementation) only — no tests needed, lightweight review |
+| No branch / main | Default to stage-and-review for any change |
+
+If the branch type is `feature/` or `experiment/`, proceed with the full workflow below. For other types, jump directly to the relevant stage and adapt the level of ceremony accordingly.
+
 ---
 
 ## Feature Workflow
