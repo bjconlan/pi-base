@@ -9,8 +9,8 @@
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, copyFileSync, mkdirSync, readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
 
 export default function (pi: ExtensionAPI) {
   pi.on("session_start", async (_event, ctx) => {
@@ -43,6 +43,31 @@ export default function (pi: ExtensionAPI) {
 
     ctx.ui.notify("Running project setup...", "info");
 
+    // Listen for session shutdown to copy current session to .ai/history/ if configured
+    pi.on("session_shutdown", (_evt, ctx) => {
+      try {
+        const sessionFile = ctx.sessionManager.getSessionFile();
+        if (!sessionFile) return;
+
+        const cwd = ctx.cwd;
+        const piSettingsPath = join(cwd, ".pi", "settings.json");
+        if (!existsSync(piSettingsPath)) return;
+
+        const settings = JSON.parse(readFileSync(piSettingsPath, "utf-8"));
+        const sessionDir = settings.sessionDir;
+        if (!sessionDir || !sessionDir.includes(".ai/history")) return;
+
+        // Resolve relative sessionDir (relative to .pi/) to absolute
+        const targetDir = join(cwd, sessionDir);
+        if (!existsSync(targetDir)) mkdirSync(targetDir, { recursive: true });
+
+        const targetPath = join(targetDir, sessionFile.split("/").pop() || "session.jsonl");
+        if (!existsSync(targetPath)) {
+          copyFileSync(sessionFile, targetPath);
+        }
+      } catch { /* non-fatal */ }
+    });
+
     // Queue the setup instructions as a user message so the agent processes them
     pi.sendUserMessage(
       [
@@ -52,7 +77,7 @@ export default function (pi: ExtensionAPI) {
             "1. **AGENTS.md** — Create an AGENTS.md file with project-level conventions. Read the template from the pi-base package at `templates/AGENTS.md` and ask me which sections I'd like included.\n\n" +
             "2. **README** — If there's no README, scan the project, infer what you can, and ask me what's missing.\n\n" +
             "3. **Git** — Check if git is initialised. If not, ask if I'd like to init and create a .gitignore.\n\n" +
-            "4. **Workspace** — Create `.ai/knowledge/` directory structure and offer to configure session logs in `.ai/history/` via `.pi/settings.json`. If the user agrees, note that the new path applies to future sessions. At the end of this session, copy any existing session files from `~/.pi/agent/sessions/` to `.ai/history/` so history is preserved at the new location. When using worktrees (as the planning workflow sets up), each worktree has its own `.ai/history/` giving natural per-branch session isolation.\n\n" +
+            "4. **Workspace** — Create `.ai/knowledge/` directory structure and offer to configure session logs in `.ai/history/` via `.pi/settings.json`. If the user agrees, note that the new path applies to future sessions. Copy any existing session files from `~/.pi/agent/sessions/` to `.ai/history/` now so the current session and its history are preserved at the new location for future sessions. When using worktrees (as the planning workflow sets up), each worktree has its own `.ai/history/` giving natural per-branch session isolation.\n\n" +
             "5. **Workflow** — Ask me about my preferred workflow, test framework, and conventions. Ask if they have custom branch types they'd like to add to the routing table beyond the defaults (feature, experiment, fix, hotfix, chore, docs). Document their answers.\n\n" +
             "6. **Project overview** — After setup, ask if they'd like to do a high-level project overview covering target audience, devices, timeframes, deployment targets, milestones, and high-level architecture. This helps frame what features to prioritise. Each feature should then be built in its own session (new context window) - the workflow starts automatically when you create a feature branch and start a new pi session.\n\n" +
             "Proceed step by step, confirming with me as you go.",
