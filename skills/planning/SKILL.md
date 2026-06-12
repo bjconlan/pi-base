@@ -211,7 +211,19 @@ Write the plan to `.ai/{branch-type}/{branch-name}.md` — for example, `.ai/fea
 ...
 ```
 
-#### Document Change Convention
+#### Diagrams
+
+When the plan includes architecture diagrams, data flow, sequence diagrams, or any other visual concept, render them as [Mermaid](https://mermaid.js.org/) markdown blocks. This keeps diagrams in plain text, version-controlled, and readable in any markdown viewer that supports Mermaid.
+
+Use the appropriate Mermaid diagram type for the concept:
+
+- **Architecture / layers:** `graph TD` or `graph LR`
+- **Data flow:** `flowchart LR`
+- **Sequences / interactions:** `sequenceDiagram`
+- **State machines:** `stateDiagram-v2`
+- **Entity relationships:** `erDiagram`
+
+### Document Change Convention
 
 Once written, the plan and verification documents are **append-only.** Never delete or replace content. Instead:
 
