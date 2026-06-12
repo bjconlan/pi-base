@@ -1,38 +1,5 @@
----
-name: planning
-description: |
-  Project planning with git branching, worktrees, layered architecture, and test-verified checkpoints.
-  Follows a 3-stage workflow: Planning → Implementation → Review.
-  Stores plans under .ai/ and manages project-level AGENTS.md context.
-  Use at the start of any feature, refactor, or enhancement.
----
+# Planning
 
-# Planning Workflow
-
-When activated, follow these steps in order. Do not skip ahead.
-
-### Branch Type Awareness
-
-Check the current branch prefix to determine which stages apply:
-
-| Branch type | Workflow |
-|-------------|----------|
-| `feature/`  | Full 3-stage workflow (Planning → Implementation → Review) |
-| `experiment/` | Full 3-stage workflow, but lighter — skip second-agent reviews, minimise documentation |
-| `fix/`      | Stage 2 (Implementation) only — skip planning, lightweight review |
-| `hotfix/`   | Stage 2 (Implementation) only — skip planning, minimal review, fast track |
-| `chore/`    | Stage 2 (Implementation) only — skip planning and outcomes doc |
-| `docs/`     | Stage 2 (Implementation) only — no tests needed, lightweight review |
-| No branch / main | Default to stage-and-review for any change |
-
-If the branch type is `feature/` or `experiment/`, proceed with the full workflow below. For other types, jump directly to the relevant stage and adapt the level of ceremony accordingly.
-
-
----
-
-## Planning
-
-High-level scoping, architecture design, and prototyping. Output is a verified plan stored in `.ai/`.
 High-level scoping, architecture design, and prototyping. Output is a verified plan stored in `.ai/`.
 
 ### 1. Interview the User

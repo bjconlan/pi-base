@@ -1,5 +1,4 @@
 # Implementation
-
 Build, test, benchmark, and verify each unit of work. Output is working code with passing tests and benchmark results.
 Build, test, benchmark, and verify each unit of work. Output is working code with passing tests and benchmark results.
 
