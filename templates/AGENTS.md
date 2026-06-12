@@ -8,22 +8,16 @@ This file defines how the agent operates within this repository. It is loaded au
 
 ## Project Lifecycle
 
-All feature work follows a 5-phase workflow. Each phase must complete before the next begins unless the user explicitly directs otherwise.
+All feature work follows a 3-stage workflow. Each stage progresses to the next, but iteration occurs both within and between stages — boundaries are checkpoints, not walls.
 
-### Phase 1 — Planning
-Interview the user to identify and clarify the problem. Produce a written plan covering scope, architecture, and units of work. Store the plan in `.ai/{branch-type}/{branch-name}.md`.
+### Stage 1 — Planning
+Interview, architecture design, prototyping, and plan writing. Output is a verified plan stored in `.ai/{branch-type}/{branch-name}.md`.
 
-### Phase 2 — Plan Verification
-Verify the plan against requirements before any implementation begins. This may include review by the user, a second agent instance, or both. Confirm the plan is sound, testable, and scoped correctly.
+### Stage 2 — Implementation
+Build and test each unit of work with parallel test development and benchmarking. Each unit must pass its verification checkpoint before moving to the next.
 
-### Phase 3 — Architectural Prototyping
-Implement the architecture at a high level — data types, API contracts, interfaces. Prototype key paths to validate the design. Re-clarify with the user if assumptions change. Optionally run a multi-agent review of the architecture.
-
-### Phase 4 — Functional Implementation
-Implement each unit of work with parallel test development. Verify against Phase 2 expectations. Each unit must pass its verification checkpoint before moving to the next.
-
-### Phase 5 — Overview & Cleanup
-Build an outcomes document comparing results against the plan. Note what changed, what was dropped, and why. Clean up dead code, prune invalid tests, and run the full test suite. Present to the user for final review before merging.
+### Stage 3 — Review
+Summarize outcomes, verify against the original goal, present for user review, and clean up after merge.
 
 ---
 
