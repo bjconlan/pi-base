@@ -9,6 +9,8 @@ description: |
 
 # Backlog Planning
 
+**Only the current and next epics may be modified.** Archived epics (lower indices) are read-only — neither the user nor the agent should edit them. The current epic must be marked complete before the next epic can become current.
+
 ---
 
 ## 1. Load Existing State
