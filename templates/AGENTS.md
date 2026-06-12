@@ -155,6 +155,21 @@ These rules constrain tool usage to prevent mistakes. They apply regardless of t
 - Prefer `--dry-run` or `--check` flags when available for destructive operations
 - Do not run package install commands (`npm install`, `pip install`, etc.) without user confirmation — they modify the project's dependency tree
 
+## Branch Naming
+
+Use the following prefixes for branches:
+
+| Prefix | When to use |
+|--------|-------------|
+| `feature/` | New features, enhancements, refactors |
+| `hotfix/`  | Urgent bug fixes for the current release |
+| `fix/`     | Non-urgent bug fixes |
+| `chore/`   | Maintenance, tooling, dependencies |
+| `docs/`    | Documentation only |
+| `experiment/` | Exploratory or throwaway work |
+
+Format: `<prefix>/<short-snaked-description>`
+
 ## Additional Conventions
 
 - Always check `.ai/knowledge/` for relevant context before starting new work

@@ -88,13 +88,23 @@ Write the architecture notes to `.ai/knowledge/architecture.md` (or update the e
 
 ### 4. Derive Branch Name
 
-From the goal summary, derive a feature branch name:
+From the goal summary, derive a branch name using the appropriate prefix:
 
-```
-feature/<short-snaked-description>
-```
+| Prefix | When to use |
+|--------|-------------|
+| `feature/` | New features, enhancements, refactors |
+| `hotfix/`  | Urgent bug fixes for the current release |
+| `fix/`     | Non-urgent bug fixes |
+| `chore/`   | Maintenance, tooling, dependencies |
+| `docs/`    | Documentation only |
+| `experiment/` | Exploratory or throwaway work |
 
-For example: `feature/add_agent_dialog`, `feature/refactor_auth_flow`.
+Format: `<prefix>/<short-snaked-description>`
+
+Examples:
+- `feature/add_agent_dialog`
+- `hotfix/crash-on-null-input`
+- `chore/upgrade-deps`
 
 ### 5. Write the Plan
 
