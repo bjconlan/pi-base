@@ -6,7 +6,7 @@ This file defines how the agent operates within this repository. It is loaded au
 
 ---
 
-## Project Feature Lifecycle
+## Feature Development Lifecycle
 
 All feature work follows a 3-stage workflow. Each stage progresses to the next, but iteration occurs both within and between stages — boundaries are checkpoints, not walls.
 
