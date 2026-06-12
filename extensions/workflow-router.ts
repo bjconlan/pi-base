@@ -134,7 +134,7 @@ export default function (pi: ExtensionAPI) {
           ctx.ui.notify(`Branch ${branch} has ${stateWarnings.join(", ")}.`, "warning");
           pi.sendUserMessage(
             `Branch \`${branch}\` has ${stateWarnings.join(", ")}. ` +
-            `Review the current state and ask the user how they'd like to proceed.`,
+            `Read \`.ai/knowledge/\` for relevant context and ask the user how they'd like to proceed.`,
             { deliverAs: "steer" },
           );
         }
