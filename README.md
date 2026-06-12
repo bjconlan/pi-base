@@ -10,7 +10,7 @@ Personal pi preferences and configuration package.
 | **Extension** | `extensions/workflow-router.ts` | On new sessions, detects the git branch and auto-starts the appropriate workflow (planning for feature/experiment, implementation for fix/hotfix/chore/docs). |
 | **Extension** | `extensions/file-hash-guard.ts` | Guards write/edit calls — warns if a file changed externally since the agent last read it, and asks for confirmation before overwriting. |
 | **Extension** | `extensions/response-style.ts` | Automatically injects response style guidelines and co-author convention into every session's system prompt. |
-| **Template** | `templates/planning-workflow.md` | Reference document for the planning workflow (interview, architecture, plan, review, prototype). Read by the workflow-router agent when on a feature/experiment branch. |
+| **Template** | `templates/branch-workflow.md` | Stage composition reference for branch-based workflows. Maps branch types to stage files (planning, implementation, review). |
 
 ## Installation
 
@@ -41,7 +41,7 @@ On each **new session** (not resumed or reloaded), the agent checks the project 
 | Project state | Branch | Action |
 |---------------|--------|--------|
 | No AGENTS.md, no README, no .ai/ | any | Prompts to run project initialisation (AGENTS.md, README, git, workspace, session storage) |
-| Initialised | `feature/*`, `experiment/*` | Auto-starts the full planning workflow by reading `templates/planning-workflow.md` |
+| Initialised | `feature/*`, `experiment/*` | Auto-starts the full planning workflow by reading `templates/branch-workflow.md` |
 | Initialised | `fix/*`, `hotfix/*`, `chore/*`, `docs/*` | Auto-starts implementation stage directly (impact analysis → implement → verify → review) |
 | Initialised | `main`, `master`, or other | Default behaviour — no auto-workflow |
 
