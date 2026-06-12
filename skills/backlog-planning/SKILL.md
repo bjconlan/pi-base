@@ -143,8 +143,7 @@ When the user determines the current epic is complete (all or most tasks done):
    # Find the highest existing index and increment
    next_index=$(ls .ai/backlog/ | grep -oP '^\d+' | sort -n | tail -1 | awk '{print $1+1}')
    next_index=${next_index:-1}
-   index=$(printf "%03d" $next_index)
-   mv .ai/backlog/current.md ".ai/backlog/${index}_<epic-short-name>.md"
+   mv .ai/backlog/current.md ".ai/backlog/${next_index}_<epic-short-name>.md"
    ```
 
 2. If `.ai/backlog/next.md` exists, promote it to become the new current:
@@ -169,7 +168,7 @@ At the end, tell the user:
 
 - The current epic is in `.ai/backlog/current.md`
 - Future items are in `.ai/backlog/next.md`
-- Archived epics are at `.ai/backlog/{index}_{name}.md` (001_, 002_, etc.)
+- Archived epics are at `.ai/backlog/{index}_{name}.md` (1_, 2_, etc.)
 - When starting a feature branch for a task, the workflow starts automatically
 - Run `/skill:backlog-planning` again to define a new epic, refine existing ones, or complete the current epic
 
@@ -179,5 +178,5 @@ At the end, tell the user:
 
 - `.ai/backlog/current.md` — active epic being worked on
 - `.ai/backlog/next.md` — queued future epic (optional)
-- `.ai/backlog/{index}_{name}.md` — archived completed epics (001_, 002_, etc.)
+- `.ai/backlog/{index}_{name}.md` — archived completed epics (1_, 2_, etc.)
 - Files use the document change convention (strikethrough + HTML comment metadata) for iterative refinement
