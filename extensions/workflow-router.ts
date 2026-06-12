@@ -76,7 +76,7 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`Resuming session: ${existingSession}`, "info");
         pi.sendUserMessage(
           `We're resuming work on \`${branch}\`. An existing session file was found at \`${existingSession}\`. ` +
-          `Please read this file to understand where work was left off - reference the stage files at \`templates/stages/\` for the relevant workflow steps, review the current state of ` +
+          `Read the plan file at \`.ai/${branch}.md\` (if it exists) and check its \`## Status\` section to determine the last active stage and next action. Also check \`.ai/${branch}.verify.md\` (if it exists) for verification history. Reference the stage files at \`templates/stages/\` to continue from where work was left off. Review the current state of review the current state of ` +
           `the branch (\`git log --oneline -10\`, \`git diff\`), check \`.ai/knowledge/\` for any ` +
           `relevant context, and present a summary to the user before continuing.`,
           { deliverAs: "steer" },

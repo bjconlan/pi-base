@@ -1,6 +1,5 @@
 # Review
 Summarize outcomes, verify against the original goal, integrate changes, and clean up. Output is a finalized plan, clean git history, and an updated knowledge base.
-Summarize outcomes, verify against the original goal, integrate changes, and clean up. Output is a finalized plan, clean git history, and an updated knowledge base.
 
 ### 11. Outcomes Document
 
@@ -29,7 +28,8 @@ Produce an outcomes section in the plan file. Append to `.ai/feature/<name>.md`:
 
 1. Run the full test suite one final time
 2. Run benchmarks one final time to confirm no regressions across all units
-3. Clean up any dead code or debug artifacts
+3. Update the `.verify.md` file with final verification results, noting what passed and any exceptions
+4. Clean up any dead code or debug artifacts
 4. If any knowledge was gained that should be preserved, update `.ai/knowledge/`:
    - Add new terms to `glossary.md`
    - Update `architecture.md` with decisions made

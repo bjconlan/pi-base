@@ -224,7 +224,9 @@ Write the plan to `.ai/feature/<name>.md`. Include a `## Status` section at the 
 - **Next action:** User approval or second-agent review, then prototype
 ```
 
-This status block is the resume point — update it at every stage transition and after each unit of work.
+This status block is the resume point — update it at every stage transition and after each unit of work. On session resume, the agent reads this status to determine the correct stage to continue from.
+
+In addition to the plan file, maintain a separate verification file at `.ai/feature/<name>.verify.md` that tracks verification criteria and results using the same append-only convention. This keeps verification history separate from the plan's scope decisions.
 
 Commit the plan:
 
