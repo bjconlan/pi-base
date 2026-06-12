@@ -213,15 +213,26 @@ Write the plan to `.ai/{branch-type}/{branch-name}.md` — for example, `.ai/fea
 
 #### Diagrams
 
-When the plan includes architecture diagrams, data flow, sequence diagrams, or any other visual concept, render them as [Mermaid](https://mermaid.js.org/) markdown blocks. This keeps diagrams in plain text, version-controlled, and readable in any markdown viewer that supports Mermaid.
+When the plan or any document includes visual concepts — architecture, data flow, sequences, state, timelines, relationships, or any structured information — render them as [Mermaid](https://mermaid.js.org/) markdown blocks. This keeps diagrams in plain text, version-controlled, and readable in any markdown viewer that supports Mermaid.
 
-Use the appropriate Mermaid diagram type for the concept:
+Pick the Mermaid diagram type that best fits what you're communicating:
 
-- **Architecture / layers:** `graph TD` or `graph LR`
-- **Data flow:** `flowchart LR`
-- **Sequences / interactions:** `sequenceDiagram`
-- **State machines:** `stateDiagram-v2`
-- **Entity relationships:** `erDiagram`
+- **Flow / architecture / relationships:** `graph`, `flowchart` — layers, component trees, decision trees, dependency graphs
+- **Interactions over time:** `sequenceDiagram` — API calls, message passing, event flows
+- **State / lifecycle:** `stateDiagram-v2` — state machines, status transitions, workflow stages
+- **Data structure:** `classDiagram` — types, interfaces, fields, inheritance
+- **Entity relationships:** `erDiagram` — database schemas, domain models
+- **Timing / schedules:** `timeline` — project timelines, release sequences, roadmaps
+- **Organisational / grouping:** `quadrantChart` — prioritisation matrices, risk/reward, effort/impact
+- **Event-driven architecture:** `event` — event storming, event flows, message routing
+- **Mind maps / brainstorming:** `mindmap` — brainstorming, concept hierarchies, task breakdowns
+- **Gantt / scheduling:** `gantt` — sprint plans, dependency scheduling, milestone tracking
+- **Pie / bar / xy charts:** `pie`, `block`, `xychart-beta` — distributions, comparisons, metrics
+- **Requirements / traceability:** `requirementDiagram` — requirement verification, spec traceability
+- **Git / branching:** `gitGraph` — branch strategies, merge workflows, release trains
+- **Packaging:** `packagDiagram` — module boundaries, namespace organisation
+
+When in doubt, use `graph` or `flowchart` — they handle most general-purpose diagrams well.
 
 ### Document Change Convention
 
