@@ -2,9 +2,9 @@
 name: backlog-planning
 description: |
   Agile epic, feature, and task planning. Guides the user through defining
-  epics with their features and tasks, stored as individual files in
-  .ai/backlog/. Use when starting a new project phase or when the roadmap
-  needs clarification.
+  the current epic with features and tasks, managing a future epic for
+  out-of-scope items, and archiving completed epics.
+  Use when starting a new project phase or when the roadmap needs clarification.
 ---
 
 # Backlog Planning
@@ -15,13 +15,17 @@ Work through these steps to define and refine epics, features, and tasks.
 
 ## 1. Load Existing State
 
-Check what epics already exist:
+Check what backlog files exist:
 
 ```bash
 ls .ai/backlog/ 2>/dev/null || echo "No backlog yet"
 ```
 
-Read any existing epic files to understand context. If none exist, start fresh.
+- `current.md` — the active epic being worked on
+- `next.md` — future epic queued up for later
+- `{yyyy.mm.dd}_{name}.md` — archived completed epics
+
+Read current.md (and next.md if it exists) to understand context. If neither exists, start fresh.
 
 ---
 
@@ -35,7 +39,7 @@ Ask the user a guided set of questions:
 - Are there hard constraints or deadlines?
 - What is the minimum viable outcome?
 
-Based on their answers, propose an epic name and summary. Confirm with the user.
+Propose an epic name and summary. Confirm with the user.
 
 ### Break Down Features
 
@@ -44,10 +48,9 @@ For each feature in the epic:
 - What is the goal of this feature?
 - What are the acceptance criteria?
 - What are the technical dependencies?
-- Can it be broken into smaller units of work (tasks)?
 - What is the priority (P0-critical, P1-important, P2-nice-to-have)?
 
-Each feature should be small enough to fit in a single `feature/{name}` branch. If too large, split it.
+Features provide context and grouping for tasks. Each feature can contain multiple tasks.
 
 ### Define Tasks
 
@@ -64,24 +67,22 @@ For each feature, define tasks. Each task should:
 
 Ask the user:
 
-> "Are there things you've thought about that don't belong in this epic but should be captured for later?"
+> "Are there things that don't belong in this epic but should be captured for later?"
 
-For each out-of-scope item, create a new epic file or add it to an existing future epic. Keep the current epic focused.
+Add these to a future epic (next.md). Keep the current epic focused.
 
 ---
 
 ## 4. Review and Classify
 
-Present the full epic back to the user:
+Present the epic back to the user:
 
 - Epic summary
 - Features (prioritised, with use cases and functional requirements)
 - Tasks per feature (ordered so blocking tasks come first)
-- Out-of-scope items noted in their respective epic files
+- Out-of-scope items noted in next.md
 
 Ask the user to review, reorder, and refine. Iterate until they're satisfied.
-
-### Classification
 
 For each feature, identify:
 
@@ -94,7 +95,7 @@ For each feature, identify:
 
 ## 5. Save State
 
-Write to `.ai/backlog/<epic-name>.md`:
+Write to `.ai/backlog/current.md`:
 
 ```markdown
 # Epic: <name>
@@ -122,9 +123,9 @@ Write to `.ai/backlog/<epic-name>.md`:
 ...
 ```
 
-Create additional files for future epics as needed (e.g. `.ai/backlog/future-enhancements.md`).
+Write future items to `.ai/backlog/next.md` if they don't already exist.
 
-Commit the backlog files:
+Commit:
 
 ```bash
 git add .ai/backlog/ && git commit -m "backlog: <epic-name>"
@@ -132,19 +133,47 @@ git add .ai/backlog/ && git commit -m "backlog: <epic-name>"
 
 ---
 
-## 6. Notify User
+## 6. Complete an Epic
+
+When the user determines the current epic is complete (all or most tasks done):
+
+1. Archive the current epic with a date prefix:
+
+   ```bash
+   mv .ai/backlog/current.md ".ai/backlog/$(date +%Y.%m.%d)_<epic-short-name>.md"
+   ```
+
+2. If `.ai/backlog/next.md` exists, promote it to become the new current:
+
+   ```bash
+   mv .ai/backlog/next.md .ai/backlog/current.md
+   ```
+
+3. If no next.md exists, ask the user if they'd like to define a new epic now. If yes, the skill continues from step 2. If no, the backlog is complete.
+
+4. Commit the changes:
+
+   ```bash
+   git add .ai/backlog/ && git commit -m "backlog: archive <epic-name>, promote next epic"
+   ```
+
+---
+
+## 7. Notify User
 
 At the end, tell the user:
 
-- The epic is defined in `.ai/backlog/<epic-name>.md`
+- The current epic is in `.ai/backlog/current.md`
+- Future items are in `.ai/backlog/next.md`
+- Archived epics are at `.ai/backlog/{date}_{name}.md`
 - When starting a feature branch for a task, the workflow starts automatically
-- Run `/skill:backlog-planning` again to define a new epic or refine existing ones
+- Run `/skill:backlog-planning` again to define a new epic, refine existing ones, or complete the current epic
 
 ---
 
 ## State Management
 
-- Each epic is its own file under `.ai/backlog/`
-- Files are version-controlled and updated via the document change convention (strikethrough + HTML comment metadata)
-- When an epic is complete, update its status and mark progress as done
-- Future epics can be defined at any time by running the skill again
+- `.ai/backlog/current.md` — active epic being worked on
+- `.ai/backlog/next.md` — queued future epic (optional)
+- `.ai/backlog/{yyyy.mm.dd}_{name}.md` — archived completed epics
+- Files use the document change convention (strikethrough + HTML comment metadata) for iterative refinement
