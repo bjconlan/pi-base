@@ -53,7 +53,7 @@ export default function (pi: ExtensionAPI) {
             "2. **README** — If there's no README, scan the project, infer what you can, and ask me what's missing.\n\n" +
             "3. **Git** — Check if git is initialised. If not, ask if I'd like to init and create a .gitignore.\n\n" +
             "4. **Workspace** — Create `.ai/knowledge/` directory structure and offer to configure session logs in `.ai/history/` via `.pi/settings.json`. If the user agrees, note that the new path applies to future sessions. At the end of this session, copy any existing session files from `~/.pi/agent/sessions/` to `.ai/history/` so history is preserved at the new location. When using worktrees (as the planning workflow sets up), each worktree has its own `.ai/history/` giving natural per-branch session isolation.\n\n" +
-            "5. **Workflow** — Ask me about my preferred workflow, test framework, and conventions. By default, main/master always stages for review; feature branches commit automatically. Ask if they'd like to change this. Document their answers.\n\n" +
+            "5. **Workflow** — Ask me about my preferred workflow, test framework, and conventions. Ask if they have custom branch types they'd like to add to the routing table beyond the defaults (feature, experiment, fix, hotfix, chore, docs). Document their answers.\n\n" +
             "Proceed step by step, confirming with me as you go.",
         },
       ],
