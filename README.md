@@ -10,7 +10,7 @@ Personal pi preferences and configuration package.
 | **Extension** | `extensions/workflow-router.ts` | On new sessions, detects the git branch and auto-starts the appropriate workflow (planning for feature/experiment, implementation for fix/hotfix/chore/docs). |
 | **Extension** | `extensions/file-hash-guard.ts` | Guards write/edit calls — warns if a file changed externally since the agent last read it, and asks for confirmation before overwriting. |
 | **Extension** | `extensions/response-style.ts` | Automatically injects response style guidelines and co-author convention into every session's system prompt. |
-| **Skill** | `skills/planning/SKILL.md` | Full feature planning workflow with architecture design, plan writing, prototyping, implementation, testing, benchmarking, and review. Use `/skill:planning` to invoke manually. |
+| **Template** | `templates/planning-workflow.md` | Reference document for the planning workflow (interview, architecture, plan, review, prototype). Read by the workflow-router agent when on a feature/experiment branch. |
 
 ## Installation
 
@@ -41,7 +41,7 @@ On each **new session** (not resumed or reloaded), the agent checks the project 
 | Project state | Branch | Action |
 |---------------|--------|--------|
 | No AGENTS.md, no README, no .ai/ | any | Prompts to run project initialisation (AGENTS.md, README, git, workspace, session storage) |
-| Initialised | `feature/*`, `experiment/*` | Auto-starts the full planning workflow (interview → architecture → plan → review → prototype) |
+| Initialised | `feature/*`, `experiment/*` | Auto-starts the full planning workflow by reading `templates/planning-workflow.md` |
 | Initialised | `fix/*`, `hotfix/*`, `chore/*`, `docs/*` | Auto-starts implementation stage directly (impact analysis → implement → verify → review) |
 | Initialised | `main`, `master`, or other | Default behaviour — no auto-workflow |
 
@@ -50,13 +50,5 @@ Continued sessions (resume) and manual `/skill:planning` invocation are unaffect
 ## Session Storage
 
 Session logs are stored in `.ai/history/` if configured during initialisation. When using worktrees (as the planning workflow sets up), each worktree has its own `.ai/history/`, giving natural per-branch session isolation.
-
-## Manual Usage
-
-The planning skill is always available for manual invocation:
-
-```
-/skill:planning
-```
 
 The response style guidelines are active automatically in every session — no action needed.

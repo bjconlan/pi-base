@@ -76,7 +76,7 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`Resuming session: ${existingSession}`, "info");
         pi.sendUserMessage(
           `We're resuming work on \`${branch}\`. An existing session file was found at \`${existingSession}\`. ` +
-          `Please read this file to understand where work was left off, review the current state of ` +
+          `Please read this file (and the planning workflow at \`templates/planning-workflow.md\`) to understand where work was left off, review the current state of ` +
           `the branch (\`git log --oneline -10\`, \`git diff\`), check \`.ai/knowledge/\` for any ` +
           `relevant context, and present a summary to the user before continuing.`,
           { deliverAs: "steer" },
@@ -99,7 +99,7 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`On ${branch} — starting planning workflow...`, "info");
         pi.sendUserMessage(
           `We're on branch \`${branch}\`.${stateWarnings.length ? ` Note: ${stateWarnings.join(", ")}.` : ""}\n\n` +
-          `Before we start, re-read \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) to understand context. Then run through the planning workflow:\n\n` +
+          `Before we start, re-read \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) to understand context. Reference the planning workflow steps at \`templates/planning-workflow.md\` and follow them:\n\n` +
           `1. **Interview** — Ask me about the goal, scope, and acceptance criteria\n` +
           `2. **Architecture** — Design the solution bottom-up then top-down\n` +
           `3. **Write plan** — Document scope, architecture, units of work, and verification strategy\n` +
