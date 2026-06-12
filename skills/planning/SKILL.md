@@ -309,7 +309,12 @@ Work through the units of work in order. For each unit:
 2. **Write tests** in parallel with implementation — exercise all branches and realistic type ranges (nulls, boundaries, common values) to surface issues early
 3. **Verify** — run the verification checkpoint. Confirm all existing tests still pass alongside the new ones
 4. **Benchmark** — if the unit involves performance-sensitive code, run benchmarks to establish a baseline or confirm no regression. Note results in the plan file.
-5. **Commit** if verification passes. Use a commit message that references the plan:
+5. **Commit or stage** — check the current branch:
+
+   - **main / master:** Always stage changes and present the diff for user review. Never commit directly.
+   - **Feature branches:** Commit if verification passes (or follow the project's convention defined in AGENTS.md).
+
+   When committing, use a message that references the plan:
 
    ```
    <unit-name>: <brief description>
@@ -321,7 +326,7 @@ Work through the units of work in order. For each unit:
 
 6. **Debug and fix** if verification fails, then re-verify
 7. **Update the status block** in the plan file — mark the unit as complete and note the commit SHA
-8. **Confirm** with the user the unit is complete before moving to the next
+8. **Confirm** with the user the unit is complete before moving to the next. If in stage-and-review mode, present the staged diff and ask the user to review before proceeding.
 
 #### Optional: Second-Agent Verification
 

@@ -53,7 +53,7 @@ export default function (pi: ExtensionAPI) {
             "2. **README** — If there's no README, scan the project, infer what you can, and ask me what's missing.\n\n" +
             "3. **Git** — Check if git is initialised. If not, ask if I'd like to init and create a .gitignore.\n\n" +
             "4. **Workspace** — Create `.ai/knowledge/` directory structure and offer to configure session logs in `.ai/history/` via `.pi/settings.json`.\n\n" +
-            "5. **Workflow** — Ask me about my preferred workflow, test framework, and conventions, then document the answers.\n\n" +
+            "5. **Workflow** — Ask me about my preferred workflow, test framework, and conventions. By default, main/master always stages for review; feature branches commit automatically. Ask if they'd like to change this. Document their answers.\n\n" +
             "Proceed step by step, confirming with me as you go.",
         },
       ],
