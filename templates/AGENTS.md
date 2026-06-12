@@ -8,7 +8,13 @@ This file defines how the agent operates within this repository. It is loaded au
 
 ## Feature Development Lifecycle
 
-All feature work follows a 3-stage workflow. Each stage progresses to the next, but iteration occurs both within and between stages — boundaries are checkpoints, not walls.
+Workflows are composed from three stages depending on branch type:
+
+| Branch type | Stages |
+|-------------|--------|
+| `feature/`, `experiment/` | Planning → Implementation → Review |
+| `fix/`, `hotfix/` | Implementation → Review |
+| `chore/`, `docs/` | Implementation |
 
 ### Stage 1 — Planning
 Interview, architecture design, prototyping, and plan writing. Output is a verified plan stored in `.ai/{branch-type}/{branch-name}.md`.
@@ -18,6 +24,8 @@ Build and test each unit of work with parallel test development and benchmarking
 
 ### Stage 3 — Review
 Summarize outcomes, verify against the original goal, present for user review, and clean up after merge.
+
+Stage boundaries are checkpoints, not walls — iteration occurs both within and between stages.
 
 ---
 
