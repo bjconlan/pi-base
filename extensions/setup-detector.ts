@@ -36,7 +36,7 @@ export default function (pi: ExtensionAPI) {
 
     const ok = await ctx.ui.confirm(
       "Project Setup",
-      "This project doesn't have AGENTS.md or a .ai/ workspace yet. Would you like me to run through project initialisation? This will set up project documentation, git (if needed), workspace directories, and session storage.",
+      "This project doesn't have AGENTS.md or a .ai/ workspace yet. Would you like me to run through project initialisation? This will set up project documentation, git (if needed), agent and session storage.",
     );
 
     if (!ok) return;
