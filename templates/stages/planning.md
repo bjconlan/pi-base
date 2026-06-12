@@ -226,7 +226,7 @@ Write the plan to `.ai/feature/<name>.md`. Include a `## Status` section at the 
 
 This status block is the resume point — update it at every stage transition and after each unit of work. On session resume, the agent reads this status to determine the correct stage to continue from.
 
-In addition to the plan file, maintain a separate verification file at `.ai/feature/<name>.verify.md` that tracks verification criteria and results using the same append-only convention. This keeps verification history separate from the plan's scope decisions.
+In addition to the plan file, maintain a verification file at `.ai/feature/<name>.verify.md` that validates outcomes against the plan's verification strategy. It uses the same append-only convention — strikethrough redacted criteria, add replacements, include metadata comments. This keeps validation history separate from the plan's scope decisions.
 
 Commit the plan:
 
