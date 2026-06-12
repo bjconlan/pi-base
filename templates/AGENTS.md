@@ -8,7 +8,7 @@ This file defines how the agent operates within this repository. It is loaded au
 
 ## Feature Development Lifecycle
 
-Workflows are composed from three stages depending on branch type:
+Workflows are composed from available stages per branch type:
 
 | Branch type | Stages |
 |-------------|--------|
