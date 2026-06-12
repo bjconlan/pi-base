@@ -13,9 +13,9 @@ When activated, follow these steps in order. Do not skip ahead.
 
 ---
 
-## Project Setup (One-Time)
+## Stage 1 — Initialisation
 
-This section runs once per project, not per feature. Skip it if `AGENTS.md` already exists.
+Project setup and configuration. This stage runs once per project.
 
 If the project does not have an `AGENTS.md` file in its root, ask the user:
 
@@ -80,7 +80,7 @@ The following stages repeat for each feature, refactor, or enhancement. Each sta
 
 ---
 
-## Stage 1 — Planning
+## Stage 2 — Planning
 
 High-level scoping, architecture design, and prototyping. Output is a verified plan stored in `.ai/`.
 
@@ -322,7 +322,7 @@ This re-establishes context from the canonical source. The same pattern applies 
 
 ---
 
-## Stage 2 — Implementation
+## Stage 3 — Implementation
 
 Build, test, benchmark, and verify each unit of work. Output is working code with passing tests and benchmark results.
 
@@ -397,7 +397,7 @@ If the plan needs to change mid-development:
 
 ---
 
-## Stage 3 — Review
+## Stage 4 — Review
 
 Summarize outcomes, verify against the original goal, integrate changes, and clean up. Output is a finalized plan, clean git history, and an updated knowledge base.
 
