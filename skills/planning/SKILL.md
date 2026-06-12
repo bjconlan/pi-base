@@ -217,7 +217,8 @@ When the plan or any document includes visual concepts — architecture, data fl
 
 Pick the Mermaid diagram type that best fits what you're communicating:
 
-- **Flow / architecture / relationships:** `graph`, `flowchart` — layers, component trees, decision trees, dependency graphs
+- **Flow / layers / relationships:** `graph`, `flowchart` — component trees, decision trees, dependency graphs
+- **Architecture diagrams:** `architecture-beta` — system architecture, service boundaries, infrastructure topology
 - **Interactions over time:** `sequenceDiagram` — API calls, message passing, event flows
 - **State / lifecycle:** `stateDiagram-v2` — state machines, status transitions, workflow stages
 - **Data structure:** `classDiagram` — types, interfaces, fields, inheritance
@@ -231,6 +232,7 @@ Pick the Mermaid diagram type that best fits what you're communicating:
 - **Requirements / traceability:** `requirementDiagram` — requirement verification, spec traceability
 - **Git / branching:** `gitGraph` — branch strategies, merge workflows, release trains
 - **Packaging:** `packagDiagram` — module boundaries, namespace organisation
+- **Network / binary layout:** `packet` — protocol layouts, binary data formats, wire formats
 
 When in doubt, use `graph` or `flowchart` — they handle most general-purpose diagrams well.
 
