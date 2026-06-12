@@ -99,7 +99,7 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`On ${branch} — starting planning workflow...`, "info");
         pi.sendUserMessage(
           `We're on branch \`${branch}\`.${stateWarnings.length ? ` Note: ${stateWarnings.join(", ")}.` : ""}\n\n` +
-          `Before we start, re-read \`.ai/knowledge/\` and the plan file at \`.ai/feature/${branch.replace("feature/", "")}.md\` (if it exists) to understand context. Then run through the planning workflow:\n\n` +
+          `Before we start, re-read \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) to understand context. Then run through the planning workflow:\n\n` +
           `1. **Interview** — Ask me about the goal, scope, and acceptance criteria\n` +
           `2. **Architecture** — Design the solution bottom-up then top-down\n` +
           `3. **Write plan** — Document scope, architecture, units of work, and verification strategy\n` +
@@ -118,7 +118,7 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`On ${branch} — jumping to implementation...`, "info");
         pi.sendUserMessage(
           `We're on branch \`${branch}\`.${stateWarnings.length ? ` Note: ${stateWarnings.join(", ")}.` : ""}\n\n` +
-          `Check \`.ai/knowledge/\` for relevant context, then:\n\n` +
+          `Check \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) for relevant context, then:\n\n` +
           `1. **Impact analysis** — Scan what will be affected by these changes\n` +
           `2. **Implement** — Make the changes with tests\n` +
           `3. **Verify** — Run tests and confirm everything passes\n` +
@@ -134,7 +134,7 @@ export default function (pi: ExtensionAPI) {
           ctx.ui.notify(`Branch ${branch} has ${stateWarnings.join(", ")}.`, "warning");
           pi.sendUserMessage(
             `Branch \`${branch}\` has ${stateWarnings.join(", ")}. ` +
-            `Read \`.ai/knowledge/\` for relevant context and ask the user how they'd like to proceed.`,
+            `Read \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) for relevant context and ask the user how they'd like to proceed.`,
             { deliverAs: "steer" },
           );
         }
