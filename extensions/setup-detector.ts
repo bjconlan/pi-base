@@ -23,9 +23,10 @@ export default function (pi: ExtensionAPI) {
     // .pi/ alone doesn't count — it may exist from package installation.
     // We look for evidence of deliberate project setup.
     const hasAgentsMd = existsSync(join(cwd, "AGENTS.md"));
+    const hasReadme = existsSync(join(cwd, "README.md"));
     const hasAiDir = existsSync(join(cwd, ".ai"));
 
-    if (hasAgentsMd || hasAiDir) return;
+    if (hasAgentsMd || hasReadme || hasAiDir) return;
 
     // Only prompt in interactive sessions
     if (!ctx.hasUI) return;
