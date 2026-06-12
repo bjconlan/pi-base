@@ -76,7 +76,7 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`Resuming session: ${existingSession}`, "info");
         pi.sendUserMessage(
           `We're resuming work on \`${branch}\`. An existing session file was found at \`${existingSession}\`. ` +
-          `Please read this file (and the planning workflow at \`templates/branch-workflow.md\`) to understand where work was left off, review the current state of ` +
+          `Please read this file to understand where work was left off - reference the stage files at \`templates/stages/\` for the relevant workflow steps, review the current state of ` +
           `the branch (\`git log --oneline -10\`, \`git diff\`), check \`.ai/knowledge/\` for any ` +
           `relevant context, and present a summary to the user before continuing.`,
           { deliverAs: "steer" },
@@ -99,13 +99,11 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`On ${branch} — starting planning workflow...`, "info");
         pi.sendUserMessage(
           `We're on branch \`${branch}\`.${stateWarnings.length ? ` Note: ${stateWarnings.join(", ")}.` : ""}\n\n` +
-          `Before we start, re-read \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) to understand context. Reference the planning workflow steps at \`templates/branch-workflow.md\` and follow them:\n\n` +
-          `1. **Interview** — Ask me about the goal, scope, and acceptance criteria\n` +
-          `2. **Architecture** — Design the solution bottom-up then top-down\n` +
-          `3. **Write plan** — Document scope, architecture, units of work, and verification strategy\n` +
-          `4. **Review** — Present the plan for my review and approval\n` +
-          `5. **Prototype** — Validate the architecture before full implementation\n\n` +
-          `Proceed step by step, confirming with me as you go.`,
+          `Before we start, re-read \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) to understand context. Follow the stages in order:\n\n` +
+          `1. \`templates/stages/planning.md\` — Interview, architecture, plan writing, review, prototype\n` +
+          `2. \`templates/stages/implementation.md\` — Impact analysis, code, tests, benchmarks\n` +
+          `3. \`templates/stages/review.md\` — Outcomes, final verify, user review, merge\n\n` +
+          `Start with \`templates/stages/planning.md\` and proceed step by step, confirming with me as you go.`,
           { deliverAs: "steer" },
         );
         break;
@@ -118,12 +116,8 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`On ${branch} — jumping to implementation...`, "info");
         pi.sendUserMessage(
           `We're on branch \`${branch}\`.${stateWarnings.length ? ` Note: ${stateWarnings.join(", ")}.` : ""}\n\n` +
-          `Check \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) for relevant context, then:\n\n` +
-          `1. **Impact analysis** — Scan what will be affected by these changes\n` +
-          `2. **Implement** — Make the changes with tests\n` +
-          `3. **Verify** — Run tests and confirm everything passes\n` +
-          `4. **Review** — Present the diff for my approval before merging\n\n` +
-          `Proceed step by step, confirming with me as you go.`,
+          `Check \`.ai/knowledge/\` and the plan file at \`.ai/${branch}.md\` (if it exists) for relevant context.\n\n` +
+          `Follow \`templates/stages/implementation.md\` for the detailed implementation steps. Proceed step by step, confirming with me as you go.`,
           { deliverAs: "steer" },
         );
         break;
