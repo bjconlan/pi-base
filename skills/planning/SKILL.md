@@ -72,9 +72,31 @@ When discovering the project for the first time (or when the project lacks estab
 
 Document the answers in `AGENTS.md` (if it exists) or in a temporary note for the session.
 
+### Session Storage
+
+Ask the user:
+
+> "Would you like pi to store session logs in `.ai/history/` instead of the default location? This keeps all agent-related files under `.ai/`."
+
+If yes, create `.pi/settings.json` with the session directory configured:
+
+```bash
+mkdir -p .ai/history
+```
+
+Write `.pi/settings.json`:
+
+```json
+{
+  "sessionDir": "../.ai/history"
+}
+```
+
+The path is relative to `.pi/`, so `../.ai/history` resolves to `<project>/.ai/history`.
+
 ---
 
-## Feature Workflow (3 Stages)
+## Feature Workflow (4 Stages)
 
 The following stages repeat for each feature, refactor, or enhancement. Each stage progresses to the next, but iteration occurs both within and between stages — planning may reveal implementation concerns, implementation may feed back into the plan, and review may identify gaps that loop back. Stage boundaries are checkpoints, not walls.
 
