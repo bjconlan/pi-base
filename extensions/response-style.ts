@@ -4,24 +4,64 @@
  * Automatically appends response style guidelines and co-author convention
  * to the system prompt at the start of every session.
  *
- * This replaces the need for APPEND_SYSTEM.md or the /response-style prompt
- * template — the guidelines are always present when this package is installed.
+ * Tracks model changes across the session and resets co-author tracking
+ * after each commit, so every commit lists all models that contributed.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
+let modelsSinceLastCommit: Set<string> = new Set();
+let currentModel = "";
+
 export default function (pi: ExtensionAPI) {
-  pi.on("before_agent_start", async (event, ctx) => {
+  // Track model changes
+  pi.on("model_select", async (event) => {
+    currentModel = `${event.model.provider}/${event.model.id}`;
+    modelsSinceLastCommit.add(currentModel);
+  });
+
+  // Seed with the initial model on session start
+  pi.on("session_start", async (_event, ctx) => {
+    if (ctx.model) {
+      currentModel = `${ctx.model.provider}/${ctx.model.id}`;
+      modelsSinceLastCommit.add(currentModel);
+    }
+  });
+
+  // Detect commits and reset co-author tracking
+  pi.on("tool_result", async (event) => {
+    if (event.toolName === "bash" && !event.isError) {
+      for (const block of event.content) {
+        if (block.type === "text" && /^git commit/i.test(block.text.trim())) {
+          modelsSinceLastCommit = new Set([currentModel]);
+          return;
+        }
+      }
+    }
+  });
+
+  // Inject guidelines into system prompt with current model list
+  pi.on("before_agent_start", async (event) => {
+    const models = Array.from(modelsSinceLastCommit);
+    const coAuthors = models
+      .map((m) => `Co-authored-by: ${m}/Pi Coding Agent <pi+${m}@earendil-works>`)
+      .join("\n");
+
     const guidelines = `
 ## Co-author convention
 
-Include the co-author line on all commits by default. Use the format:
+Include co-author lines on all commits by default. List every model that has contributed since the last commit. Current contributors:
 
 \`\`\`
-Co-authored-by: \${model}/Pi Coding Agent <pi+\${model}@earendil-works>
+${coAuthors}
 \`\`\`
 
-Where \${model} is the model identifier from the active provider (e.g. \`deepseek-v4-flash\`). Only omit if the user explicitly asks not to include it.
+Use the format:
+\`\`\`
+Co-authored-by: {provider}/{model}/Pi Coding Agent <pi+{provider}/{model}@earendil-works>
+\`\`\`
+
+Only omit if the user explicitly asks not to include them. The co-author list resets after each commit - only models used since the last commit are included.
 
 ## Response Style Guidelines
 
