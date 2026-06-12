@@ -19,13 +19,13 @@ export default function (pi: ExtensionAPI) {
 
     const cwd = ctx.cwd;
 
-    // Check for existing setup markers
+    // Check for existing setup markers.
+    // .pi/ alone doesn't count — it may exist from package installation.
+    // We look for evidence of deliberate project setup.
     const hasAgentsMd = existsSync(join(cwd, "AGENTS.md"));
     const hasAiDir = existsSync(join(cwd, ".ai"));
-    const hasPiSettings = existsSync(join(cwd, ".pi", "settings.json"));
 
-    // If any marker exists, setup has been done at least partially
-    if (hasAgentsMd || hasAiDir || hasPiSettings) return;
+    if (hasAgentsMd || hasAiDir) return;
 
     // Only prompt in interactive sessions
     if (!ctx.hasUI) return;
@@ -35,7 +35,7 @@ export default function (pi: ExtensionAPI) {
 
     const ok = await ctx.ui.confirm(
       "Project Setup",
-      "This project doesn't appear to have agent setup files (AGENTS.md, .ai/, .pi/). Would you like me to run through project initialisation? This will set up project documentation, git (if needed), workspace directories, and session storage.",
+      "This project doesn't have AGENTS.md or a .ai/ workspace yet. Would you like me to run through project initialisation? This will set up project documentation, git (if needed), workspace directories, and session storage.",
     );
 
     if (!ok) return;
