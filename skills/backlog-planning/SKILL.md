@@ -1,15 +1,13 @@
 ---
 name: backlog-planning
 description: |
-  Agile epic, feature, and task planning. Guides the user through defining
-  epics as indexed files in .ai/backlog/. The current epic is always the
-  second-highest index; the highest index is the queued next epic.
+  Agile epic, feature, and task planning. Epics are stored as numbered
+  files in .ai/backlog/. The highest index is the next epic, the
+  second-highest is the current epic, lower indices are archived.
   Use when starting a new project phase or when the roadmap needs clarification.
 ---
 
 # Backlog Planning
-
-Work through these steps to define and refine epics, features, and tasks.
 
 ---
 
@@ -21,38 +19,37 @@ List the backlog files:
 ls -1 .ai/backlog/ 2>/dev/null | sort -n || echo "No backlog yet"
 ```
 
-The highest index is the **next** epic (queued for later). The second-highest is the **current** epic (being worked on). All lower indices are archived completed epics.
+- Highest index = next epic (queued)
+- Second-highest = current epic (being worked on)
+- Lower indices = archived completed epics
 
-Read the current epic to understand context. If none exist, start fresh.
+Read the current epic for context. If none exist, start fresh.
 
 ---
 
 ## 2. Interview — Define the Epic
 
-Ask the user a guided set of questions:
+Ask the user:
 
-- What is the current focus? What are you trying to achieve?
-- What does success look like?
+- What is the current focus and what does success look like?
 - What are the main capabilities or features needed?
-- Are there hard constraints or deadlines?
+- Are there constraints or deadlines?
 - What is the minimum viable outcome?
 
-Propose an epic name and summary. Confirm with the user.
+Propose an epic summary and confirm.
 
 ### Break Down Features
 
-For each feature in the epic:
+For each feature:
 
-- What is the goal of this feature?
-- What are the acceptance criteria?
-- What are the technical dependencies?
-- What is the priority (P0-critical, P1-important, P2-nice-to-have)?
+- Goal, acceptance criteria, dependencies
+- Priority: P0-critical, P1-important, P2-nice-to-have
 
-Features provide context and grouping for tasks.
+Features group tasks. Each feature can contain multiple tasks.
 
 ### Define Tasks
 
-For each feature, define tasks. Each task should:
+Each task should:
 
 - Have a clear description
 - Map to a `feature/{short-name}` branch
@@ -63,46 +60,40 @@ For each feature, define tasks. Each task should:
 
 ## 3. Identify Out-of-Scope Items
 
-Ask the user:
+Ask:
 
-> "Are there things that don't belong in this epic but should be captured for later?"
+> "Are there things that don't belong here but should be captured for later?"
 
-Add these to the next epic (highest index). If no next epic exists, the user can create one later.
+Add these to the next epic (highest index).
 
 ---
 
 ## 4. Review and Classify
 
-Present the epic back to the user:
+Present the epic for review. For each feature identify:
 
-- Epic summary
-- Features (prioritised, with use cases and functional requirements)
-- Tasks per feature (ordered so blocking tasks come first)
-- Out-of-scope items noted in the next epic
+- **Use cases** — what interactions does this enable?
+- **Functional requirements** — behaviours, inputs, outputs
+- **Dependencies** — what must exist first
+- **Verification** — how to confirm it works
 
-Ask the user to review, reorder, and refine. Iterate until satisfied.
-
-For each feature, identify:
-
-- **Use cases** — what user or system interactions does this enable?
-- **Functional requirements** — specific behaviours, inputs, outputs
-- **Dependencies** — what must exist before this can start
-- **Verification** — how will you know it works?
+Iterate until the user is satisfied.
 
 ---
 
 ## 5. Save State
 
-Determine the index for the new epic:
+When creating a new epic, always create both the current epic and a next epic placeholder:
 
 ```bash
-# Highest existing index, or 0 if none
+mkdir -p .ai/backlog
 last=$(ls .ai/backlog/ 2>/dev/null | grep -oP '^\d+' | sort -n | tail -1)
 last=${last:-0}
-next_index=$((last + 1))
+current_index=$((last + 1))
+next_index=$((last + 2))
 ```
 
-Write the new epic to `.ai/backlog/${next_index}_<short-name>.md`:
+Write the current epic to `.ai/backlog/${current_index}.md`:
 
 ```markdown
 # Epic: <name>
@@ -112,25 +103,34 @@ Write the new epic to `.ai/backlog/${next_index}_<short-name>.md`:
 
 ## Status
 - **Priority:** P0 | P1 | P2
-- **Progress:** 0% — tasks: X total, Y done
-- **Target:** <deadline or release if known>
+- **Progress:** 0%
+- **Target:** <deadline if known>
 
 ## Features
 
-### Feature 1: <name>
-- **Priority:** P0 | P1 | P2
+### Feature: <name> (P0)
 - **Use cases:** ...
-- **Functional requirements:** ...
+- **Requirements:** ...
 - **Dependencies:** ...
 - **Tasks:**
-  - [ ] `feature/<branch>` — Description (status: backlog)
-  - [ ] `feature/<branch>` — Description (status: backlog)
-
-### Feature 2: <name>
-...
+  - [ ] `feature/<branch>` — Description (backlog)
 ```
 
-If this is the first epic (index 1), it becomes the current epic. If a current epic already exists, this becomes the next epic.
+Write a lightweight next epic placeholder to `.ai/backlog/${next_index}.md`:
+
+```markdown
+# Epic: <next-name> (Future)
+
+## Summary
+...
+
+## Status
+- **Priority:** P2
+- **Progress:** 0%
+
+## Features
+...
+```
 
 Commit:
 
@@ -142,12 +142,12 @@ git add .ai/backlog/ && git commit -m "backlog: <epic-name>"
 
 ## 6. Complete an Epic
 
-When the user determines the current epic is done (all or most tasks complete):
+When the user determines the current epic is done:
 
-1. The current epic file stays as-is — it's now archived by index order
-2. If a next epic exists (higher index), it becomes the new current epic automatically
-3. If no next epic exists, ask if the user wants to define one now. If yes, create it as `$(($(ls .ai/backlog/ | grep -oP '^\d+' | sort -n | tail -1)+1))_<name>.md`
-4. Update the current epic's progress to 100% and note completion in its file
+1. Update its progress to 100% and note completion
+2. The next epic (highest index) becomes the new current
+3. Create a new next epic placeholder at `$(($(ls .ai/backlog/ | grep -oP '^\d+' | sort -n | tail -1)+1)).md`
+4. If the user wants to define the next epic now, run through the interview; otherwise leave it as a placeholder
 5. Commit:
 
    ```bash
@@ -158,19 +158,6 @@ When the user determines the current epic is done (all or most tasks complete):
 
 ## 7. Notify User
 
-At the end, tell the user:
-
-- The current epic is the second-highest index in `.ai/backlog/`
-- The next epic is the highest index
-- When starting a feature branch for a task, the workflow starts automatically
-- Run `/skill:backlog-planning` again to define a new epic, refine existing ones, or complete the current epic
-
----
-
-## State Management
-
-- All epics are indexed files in `.ai/backlog/`: `{index}_{short-name}.md`
-- Current epic = second-highest index
-- Next epic = highest index
-- Lower indices = archived completed epics
-- Files use the document change convention (strikethrough + HTML comment metadata) for iterative refinement
+- Current epic: highest index minus 1
+- Next epic: highest index
+- Run `/skill:backlog-planning` again to refine, complete, or add epics
