@@ -14,31 +14,30 @@ import { join, dirname } from "node:path";
 
 let setupPerformedThisSession = false;
 
-pi.on("session_shutdown", (_evt, ctx) => {
-  if (!setupPerformedThisSession) return;
-  try {
-    const sessionFile = ctx.sessionManager.getSessionFile();
-    if (!sessionFile) return;
-
-    const cwd = ctx.cwd;
-    const piSettingsPath = join(cwd, ".pi", "settings.json");
-    if (!existsSync(piSettingsPath)) return;
-
-    const settings = JSON.parse(readFileSync(piSettingsPath, "utf-8"));
-    const sessionDir = settings.sessionDir;
-    if (!sessionDir || !sessionDir.includes(".ai/history")) return;
-
-    const targetDir = join(cwd, sessionDir);
-    if (!existsSync(targetDir)) mkdirSync(targetDir, { recursive: true });
-
-    const targetPath = join(targetDir, sessionFile.split("/").pop() || "session.jsonl");
-    if (!existsSync(targetPath)) {
-      copyFileSync(sessionFile, targetPath);
-    }
-  } catch { /* non-fatal */ }
-});
-
 export default function (pi: ExtensionAPI) {
+  pi.on("session_shutdown", (_evt, ctx) => {
+    if (!setupPerformedThisSession) return;
+    try {
+      const sessionFile = ctx.sessionManager.getSessionFile();
+      if (!sessionFile) return;
+
+      const cwd = ctx.cwd;
+      const piSettingsPath = join(cwd, ".pi", "settings.json");
+      if (!existsSync(piSettingsPath)) return;
+
+      const settings = JSON.parse(readFileSync(piSettingsPath, "utf-8"));
+      const sessionDir = settings.sessionDir;
+      if (!sessionDir || !sessionDir.includes(".ai/history")) return;
+
+      const targetDir = join(cwd, sessionDir);
+      if (!existsSync(targetDir)) mkdirSync(targetDir, { recursive: true });
+
+      const targetPath = join(targetDir, sessionFile.split("/").pop() || "session.jsonl");
+      if (!existsSync(targetPath)) {
+        copyFileSync(sessionFile, targetPath);
+      }
+    } catch { /* non-fatal */ }
+  });
   pi.on("session_start", async (_event, ctx) => {
     // Only run for new sessions, not reloads or resumes
     if (_event.reason !== "startup" && _event.reason !== "new") return;
