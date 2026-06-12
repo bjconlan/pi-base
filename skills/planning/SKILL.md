@@ -11,92 +11,11 @@ description: |
 
 When activated, follow these steps in order. Do not skip ahead.
 
----
-
-## Stage 1 — Initialisation
-
-Project setup and configuration. This stage runs once per project.
-
-If the project does not have an `AGENTS.md` file in its root, ask the user:
-
-> "This project doesn't have an AGENTS.md yet — that's where I store project-level conventions, workflow definitions, and knowledge architecture. Would you like me to create one?"
-
-If yes, present the available sections and ask which ones they'd like included:
-
-> "I have a template with these possible sections:
->
-> 1. **Project Lifecycle** — Defines the 3-stage workflow (planning → implementation → review). Relevant if you want structured feature development.
-> 2. **Plan & Spec Storage** — Where plans are saved (`.ai/{branch-type}/{branch-name}.md`). Useful if you're using the planning workflow.
-> 3. **Knowledge Architecture** — Persistent project memory under `.ai/knowledge/` (glossary, architecture decisions, references). Good for projects that will have ongoing agent sessions.
-> 4. **Skill Routing** — Documents which skills are available and when to use them.
-> 5. **Working Rules** — Effort matching, architecture analysis, research-before-action defaults.
-> 6. **Guardrails** — Tool enforcement rules for read/write/execute operations.
->
-> Which of these would you like? I can also suggest sections based on what I know about the project so far."
-
-Based on their responses, read the template and adapt only the selected sections. Write it to `AGENTS.md` in the project root. Ask the user to review and adjust before committing.
-
-If no, proceed without it.
-
-### README.md
-
-If the project doesn't have a `README.md`, ask the user:
-
-> "There's no README yet. Would you like me to create one? I'll ask a few questions to get the right content."
-
-If yes, first scan the project to gather what can be deduced automatically:
-
-```bash
-ls -la
-```
-
-Look for manifest files (`package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `Gemfile`, `CMakeLists.txt`, `Makefile`, `Dockerfile`, `compose.yaml`, etc.) and read them to infer language, runtime, dependencies, and build commands. Then present what was found and ask the user only for what couldn't be deduced:
-
-- **Project purpose** — the agent can't guess this, the user must describe it
-- **Language / runtime** — confirm what was inferred from manifests
-- **Dependencies** — confirm what was found, ask about any non-standard ones
-- **Build / test / run commands** — confirm what was inferred from manifests or Makefiles
-- **Environment variables, config, setup steps** — confirm what config files exist, ask about required env vars not in `.env.example` or similar
-- **Anything else** someone new would need
-
-Write the README, ask the user to review, then commit it.
-
-### First-Discovery Workflow Questions
-
-When discovering the project for the first time (or when the project lacks established conventions), ask the user:
-
-> "Before we start, I'd like to understand how you work in this project:
-> - Do you want multi-step verification plans for changes, or is a lighter check sufficient?
-> - Are there any existing workflows or conventions I should follow?
-> - Is there a preferred test framework or CI process?"
-
-Document the answers in `AGENTS.md` (if it exists) or in a temporary note for the session.
-
-### Session Storage
-
-Ask the user:
-
-> "Would you like pi to store session logs in `.ai/history/` instead of the default location? This keeps all agent-related files under `.ai/`."
-
-If yes, create `.pi/settings.json` with the session directory configured:
-
-```bash
-mkdir -p .ai/history
-```
-
-Write `.pi/settings.json`:
-
-```json
-{
-  "sessionDir": "../.ai/history"
-}
-```
-
-The path is relative to `.pi/`, so `../.ai/history` resolves to `<project>/.ai/history`.
+If this project hasn't been set up yet, run `/skill:setup` first to initialise AGENTS.md, git, and the `.ai/` workspace. Otherwise, proceed with the feature workflow below.
 
 ---
 
-## Feature Workflow (4 Stages)
+## Feature Workflow
 
 The following stages repeat for each feature, refactor, or enhancement. Each stage progresses to the next, but iteration occurs both within and between stages — planning may reveal implementation concerns, implementation may feed back into the plan, and review may identify gaps that loop back. Stage boundaries are checkpoints, not walls.
 
