@@ -2,8 +2,8 @@
 name: backlog-planning
 description: |
   Agile epic, feature, and task planning. Guides the user through defining
-  the current epic with features and tasks, managing a future epic for
-  out-of-scope items, and archiving completed epics.
+  epics as indexed files in .ai/backlog/. The current epic is always the
+  second-highest index; the highest index is the queued next epic.
   Use when starting a new project phase or when the roadmap needs clarification.
 ---
 
@@ -15,17 +15,15 @@ Work through these steps to define and refine epics, features, and tasks.
 
 ## 1. Load Existing State
 
-Check what backlog files exist:
+List the backlog files:
 
 ```bash
-ls .ai/backlog/ 2>/dev/null || echo "No backlog yet"
+ls -1 .ai/backlog/ 2>/dev/null | sort -n || echo "No backlog yet"
 ```
 
-- `current.md` — the active epic being worked on
-- `next.md` — future epic queued up for later
-- `{yyyy.mm.dd}_{name}.md` — archived completed epics
+The highest index is the **next** epic (queued for later). The second-highest is the **current** epic (being worked on). All lower indices are archived completed epics.
 
-Read current.md (and next.md if it exists) to understand context. If neither exists, start fresh.
+Read the current epic to understand context. If none exist, start fresh.
 
 ---
 
@@ -50,7 +48,7 @@ For each feature in the epic:
 - What are the technical dependencies?
 - What is the priority (P0-critical, P1-important, P2-nice-to-have)?
 
-Features provide context and grouping for tasks. Each feature can contain multiple tasks.
+Features provide context and grouping for tasks.
 
 ### Define Tasks
 
@@ -69,7 +67,7 @@ Ask the user:
 
 > "Are there things that don't belong in this epic but should be captured for later?"
 
-Add these to a future epic (next.md). Keep the current epic focused.
+Add these to the next epic (highest index). If no next epic exists, the user can create one later.
 
 ---
 
@@ -80,9 +78,9 @@ Present the epic back to the user:
 - Epic summary
 - Features (prioritised, with use cases and functional requirements)
 - Tasks per feature (ordered so blocking tasks come first)
-- Out-of-scope items noted in next.md
+- Out-of-scope items noted in the next epic
 
-Ask the user to review, reorder, and refine. Iterate until they're satisfied.
+Ask the user to review, reorder, and refine. Iterate until satisfied.
 
 For each feature, identify:
 
@@ -95,7 +93,16 @@ For each feature, identify:
 
 ## 5. Save State
 
-Write to `.ai/backlog/current.md`:
+Determine the index for the new epic:
+
+```bash
+# Highest existing index, or 0 if none
+last=$(ls .ai/backlog/ 2>/dev/null | grep -oP '^\d+' | sort -n | tail -1)
+last=${last:-0}
+next_index=$((last + 1))
+```
+
+Write the new epic to `.ai/backlog/${next_index}_<short-name>.md`:
 
 ```markdown
 # Epic: <name>
@@ -123,7 +130,7 @@ Write to `.ai/backlog/current.md`:
 ...
 ```
 
-Write future items to `.ai/backlog/next.md` if they don't already exist.
+If this is the first epic (index 1), it becomes the current epic. If a current epic already exists, this becomes the next epic.
 
 Commit:
 
@@ -135,29 +142,16 @@ git add .ai/backlog/ && git commit -m "backlog: <epic-name>"
 
 ## 6. Complete an Epic
 
-When the user determines the current epic is complete (all or most tasks done):
+When the user determines the current epic is done (all or most tasks complete):
 
-1. Archive the current epic with the next available index:
-
-   ```bash
-   # Find the highest existing index and increment
-   next_index=$(ls .ai/backlog/ | grep -oP '^\d+' | sort -n | tail -1 | awk '{print $1+1}')
-   next_index=${next_index:-1}
-   mv .ai/backlog/current.md ".ai/backlog/${next_index}_<epic-short-name>.md"
-   ```
-
-2. If `.ai/backlog/next.md` exists, promote it to become the new current:
+1. The current epic file stays as-is — it's now archived by index order
+2. If a next epic exists (higher index), it becomes the new current epic automatically
+3. If no next epic exists, ask if the user wants to define one now. If yes, create it as `$(($(ls .ai/backlog/ | grep -oP '^\d+' | sort -n | tail -1)+1))_<name>.md`
+4. Update the current epic's progress to 100% and note completion in its file
+5. Commit:
 
    ```bash
-   mv .ai/backlog/next.md .ai/backlog/current.md
-   ```
-
-3. If no next.md exists, ask the user if they'd like to define a new epic now. If yes, the skill continues from step 2. If no, the backlog is complete.
-
-4. Commit the changes:
-
-   ```bash
-   git add .ai/backlog/ && git commit -m "backlog: archive <epic-name>, promote next epic"
+   git add .ai/backlog/ && git commit -m "backlog: complete <epic-name>"
    ```
 
 ---
@@ -166,9 +160,8 @@ When the user determines the current epic is complete (all or most tasks done):
 
 At the end, tell the user:
 
-- The current epic is in `.ai/backlog/current.md`
-- Future items are in `.ai/backlog/next.md`
-- Archived epics are at `.ai/backlog/{index}_{name}.md` (1_, 2_, etc.)
+- The current epic is the second-highest index in `.ai/backlog/`
+- The next epic is the highest index
 - When starting a feature branch for a task, the workflow starts automatically
 - Run `/skill:backlog-planning` again to define a new epic, refine existing ones, or complete the current epic
 
@@ -176,7 +169,8 @@ At the end, tell the user:
 
 ## State Management
 
-- `.ai/backlog/current.md` — active epic being worked on
-- `.ai/backlog/next.md` — queued future epic (optional)
-- `.ai/backlog/{index}_{name}.md` — archived completed epics (1_, 2_, etc.)
+- All epics are indexed files in `.ai/backlog/`: `{index}_{short-name}.md`
+- Current epic = second-highest index
+- Next epic = highest index
+- Lower indices = archived completed epics
 - Files use the document change convention (strikethrough + HTML comment metadata) for iterative refinement
