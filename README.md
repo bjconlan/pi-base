@@ -8,6 +8,7 @@ Personal pi preferences and configuration package.
 |----------|--------|-------------|
 | **Extension** | `extensions/file-hash-guard.ts` | Guards write/edit calls — warns if a file changed externally since the agent last read it, and asks for confirmation before overwriting. |
 | **Extension** | `extensions/response-style.ts` | Automatically injects response style guidelines and co-author convention into every session's system prompt. |
+| **Extension** | `extensions/setup-detector.ts` | Automatically detects fresh projects and prompts to run through initialisation (AGENTS.md, README, git, .ai/ workspace, session storage). |
 | **Skill** | `skills/planning/SKILL.md` | 5-phase feature workflow with planning, verification, architectural prototyping, implementation, and cleanup. Uses git branching, worktrees, and optional multi-agent review. Use `/skill:planning` at the start of a feature. |
 
 ## Installation

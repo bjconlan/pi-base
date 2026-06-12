@@ -11,8 +11,6 @@ description: |
 
 When activated, follow these steps in order. Do not skip ahead.
 
-If this project hasn't been set up yet, run `/skill:setup` first to initialise AGENTS.md, git, and the `.ai/` workspace. Otherwise, proceed with the feature workflow below.
-
 ---
 
 ## Feature Workflow
