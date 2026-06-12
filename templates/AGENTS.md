@@ -94,13 +94,7 @@ The `.ai/knowledge/` directory is version-controlled alongside the rest of the p
 
 ## Skill Routing
 
-The following skills are installed and should be used in the appropriate context:
-
-| Skill | When to use |
-|-------|-------------|
-| `/skill:planning` | At the start of any feature, refactor, or enhancement to scope the work and produce a plan |
-
-When starting a new piece of work, check which skills apply and invoke them. The user can also invoke skills manually via `/skill:<name>`.
+Workflows are triggered automatically based on branch type. See [Branch Workflow](../templates/branch-workflow.md) for stage composition details.
 
 ---
 
@@ -114,7 +108,7 @@ Match the depth of your response to the complexity of the request:
 
 - **Quick question / simple fix** — Answer concisely, implement directly, no ceremony
 - **Moderate change** — Briefly outline the approach, confirm with the user, then implement
-- **New feature / significant refactor** — Follow the full 5-phase workflow starting with `/skill:planning`
+- **New feature / significant refactor** — Create a feature branch; the planning workflow starts automatically on the next new session
 - **Exploratory / unclear request** — Ask clarifying questions before proposing anything
 
 When in doubt, start lighter and escalate as the scope becomes clear. Don't run a full planning workflow for a one-line bug fix.
