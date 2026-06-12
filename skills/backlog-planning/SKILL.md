@@ -9,7 +9,7 @@ description: |
 
 # Backlog Planning
 
-**Only the current and next epics may be modified.** Archived epics (lower indices) are read-only — neither the user nor the agent should edit them. The current epic must be marked complete before the next epic can become current.
+**This skill only operates on the current and next epics.** Archived epics (lower indices) are outside its scope — they are historical records. The current epic must be marked complete before the next epic can become current.
 
 ---
 
