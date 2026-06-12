@@ -137,10 +137,14 @@ git add .ai/backlog/ && git commit -m "backlog: <epic-name>"
 
 When the user determines the current epic is complete (all or most tasks done):
 
-1. Archive the current epic with a date prefix:
+1. Archive the current epic with the next available index:
 
    ```bash
-   mv .ai/backlog/current.md ".ai/backlog/$(date +%Y.%m.%d)_<epic-short-name>.md"
+   # Find the highest existing index and increment
+   next_index=$(ls .ai/backlog/ | grep -oP '^\d+' | sort -n | tail -1 | awk '{print $1+1}')
+   next_index=${next_index:-1}
+   index=$(printf "%03d" $next_index)
+   mv .ai/backlog/current.md ".ai/backlog/${index}_<epic-short-name>.md"
    ```
 
 2. If `.ai/backlog/next.md` exists, promote it to become the new current:
@@ -165,7 +169,7 @@ At the end, tell the user:
 
 - The current epic is in `.ai/backlog/current.md`
 - Future items are in `.ai/backlog/next.md`
-- Archived epics are at `.ai/backlog/{date}_{name}.md`
+- Archived epics are at `.ai/backlog/{index}_{name}.md` (001_, 002_, etc.)
 - When starting a feature branch for a task, the workflow starts automatically
 - Run `/skill:backlog-planning` again to define a new epic, refine existing ones, or complete the current epic
 
@@ -175,5 +179,5 @@ At the end, tell the user:
 
 - `.ai/backlog/current.md` — active epic being worked on
 - `.ai/backlog/next.md` — queued future epic (optional)
-- `.ai/backlog/{yyyy.mm.dd}_{name}.md` — archived completed epics
+- `.ai/backlog/{index}_{name}.md` — archived completed epics (001_, 002_, etc.)
 - Files use the document change convention (strikethrough + HTML comment metadata) for iterative refinement
