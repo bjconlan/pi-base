@@ -27,14 +27,16 @@ When invoked, the agent should stop and describe back what it understands about 
 
 ## When to use it
 
-Use this whenever you're about to commit to a course of action based on understood requirements. Common examples:
+Use this whenever the user provides information that will serve as a foundation for other work — decisions, constraints, requirements, or goals that downstream tasks will depend on. Before building on that information, describe back what you understood so both parties are aligned.
 
-- **Project initialisation** — before committing the skeleton, confirm the project scope and structure are understood correctly
-- **Backlog planning** — after the user describes a feature, check your understanding before writing tasks; before saving the epic, confirm the full picture
-- **Starting a feature branch** — at session start, restate what you understand the feature should do before diving into implementation
-- **Architecture design** — after the user describes constraints and goals, confirm your interpretation before proposing a design
+Examples of foundational information:
 
-But these are examples, not a fixed list. The general rule: if you're about to act on what the user told you, first describe back what you understood and confirm it's correct.
+- **Project scope and purpose** — what the project is trying to achieve, target audience, constraints
+- **Feature requirements** — acceptance criteria, use cases, dependencies between features
+- **Architectural decisions** — technology choices, data model, API contracts
+- **Task definitions** — what a unit of work entails, verification criteria
+
+The general rule: if a misunderstanding would cascade into wasted work, verify your understanding first.
 
 ## Usage
 
