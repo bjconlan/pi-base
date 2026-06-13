@@ -4,7 +4,8 @@ description: |
   The agent describes back what it understands so far about the user's
   goals, requirements, or design. Use this to confirm shared understanding
   and refine the agent's mental model before proceeding.
-  Automatically triggered at key phase or stage boundaries.
+  Automatically triggered whenever something needs to be described,
+  defined, or clarified before diving into the task.
 ---
 
 # Explain to Me
@@ -24,12 +25,19 @@ When invoked, the agent should stop and describe back what it understands about 
 - If you got something wrong, state clearly where you misunderstood.
 - Do not add praise or commentary about the user's ideas.
 
-## Usage
+## Trigger points
 
-Invoke at any time:
+The skill is triggered automatically before committing to any of these:
+
+1. **Project initialisation** — after setup, before committing the skeleton project
+2. **Architecture design** — after defining the architecture, before writing the plan
+3. **Backlog planning** — after each feature is defined, and before saving the full epic
+4. **New feature branch** — at session start on a feature branch, before the planning workflow begins
+
+## Manual usage
+
+Invoke at any time when you want the agent to restate its understanding:
 
 ```
 /skill:explain-to-me
 ```
-
-Also triggered automatically at phase boundaries to ensure the agent's understanding is aligned before work continues.
