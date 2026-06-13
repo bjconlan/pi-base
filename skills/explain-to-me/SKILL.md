@@ -4,7 +4,7 @@ description: |
   The agent describes back what it understands so far about the user's
   goals, requirements, or design. Use this to confirm shared understanding
   and refine the agent's mental model before proceeding.
-  Automatically triggered at key phase boundaries.
+  Automatically triggered at key phase or stage boundaries.
 ---
 
 # Explain to Me
