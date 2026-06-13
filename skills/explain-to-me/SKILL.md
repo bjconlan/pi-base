@@ -25,18 +25,20 @@ When invoked, the agent should stop and describe back what it understands about 
 - If you got something wrong, state clearly where you misunderstood.
 - Do not add praise or commentary about the user's ideas.
 
-## Trigger points
+## When to use it
 
-The skill is triggered automatically before committing to any of these:
+Use this whenever you're about to commit to a course of action based on understood requirements. Common examples:
 
-1. **Project initialisation** — after setup, before committing the skeleton project
-2. **Architecture design** — after defining the architecture, before writing the plan
-3. **Backlog planning** — after each feature is defined, and before saving the full epic
-4. **New feature branch** — at session start on a feature branch, before the planning workflow begins
+- **Project initialisation** — before committing the skeleton, confirm the project scope and structure are understood correctly
+- **Backlog planning** — after the user describes a feature, check your understanding before writing tasks; before saving the epic, confirm the full picture
+- **Starting a feature branch** — at session start, restate what you understand the feature should do before diving into implementation
+- **Architecture design** — after the user describes constraints and goals, confirm your interpretation before proposing a design
 
-## Manual usage
+But these are examples, not a fixed list. The general rule: if you're about to act on what the user told you, first describe back what you understood and confirm it's correct.
 
-Invoke at any time when you want the agent to restate its understanding:
+## Usage
+
+Invoke at any time:
 
 ```
 /skill:explain-to-me
