@@ -49,7 +49,7 @@ For each feature:
 
 Features group tasks. Each feature can contain multiple tasks.
 
-After defining a feature, run `/skill:explain` to clarify its goals and confirm shared understanding before moving to the next feature.
+After defining a feature, run `/skill:explain-to-me` to clarify its goals and confirm shared understanding before moving to the next feature.
 
 ### Define Tasks
 
@@ -83,7 +83,7 @@ Present the epic for review. For each feature identify:
 
 Iterate until the user is satisfied.
 
-Run `/skill:explain` to confirm shared understanding of the full epic before saving.
+Run `/skill:explain-to-me` to confirm shared understanding of the full epic before saving.
 
 ---
 

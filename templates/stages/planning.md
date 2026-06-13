@@ -65,7 +65,7 @@ Confirm the data types and API contracts with the user before moving on. Impleme
 
 Write the architecture notes to `.ai/knowledge/architecture.md` (or update the existing file). This ensures the next session or stage can reload the design context from disk rather than relying on conversation history.
 
-Run `/skill:explain` to confirm shared understanding of the architecture before proceeding.
+Run `/skill:explain-to-me` to confirm shared understanding of the architecture before proceeding.
 
 ### 4. Derive Branch Name
 

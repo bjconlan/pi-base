@@ -1,5 +1,5 @@
 ---
-name: explain
+name: explain-to-me
 description: |
   Prompts the agent to explain its reasoning, decisions, or design
   choices in detail. Use when you want clarity on what was done, why,
@@ -29,7 +29,7 @@ When invoked (or triggered at a phase boundary), the agent should step back and 
 The user can invoke this at any time via:
 
 ```
-/skill:explain
+/skill:explain-to-me
 ```
 
 It is also triggered automatically at phase boundaries (end of planning, end of architecture design, end of project initialisation) to confirm shared understanding before proceeding.
