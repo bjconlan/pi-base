@@ -1,35 +1,35 @@
 ---
 name: explain-to-me
 description: |
-  Prompts the agent to explain its reasoning, decisions, or design
-  choices in detail. Use when you want clarity on what was done, why,
-  and what the trade-offs are. Automatically triggered at key phase
-  boundaries to ensure shared understanding.
+  The agent describes back what it understands so far about the user's
+  goals, requirements, or design. Use this to confirm shared understanding
+  and refine the agent's mental model before proceeding.
+  Automatically triggered at key phase boundaries.
 ---
 
-# Explain
+# Explain to Me
 
-When invoked (or triggered at a phase boundary), the agent should step back and clearly explain:
+When invoked, the agent should stop and describe back what it understands about the current topic — not its own decisions, but the user's intent.
 
 ## What to cover
 
-- **What was just done or decided** — a concise summary
-- **Why this approach** — rationale, trade-offs considered, alternatives ruled out
-- **What it means for you** — impact on next steps, choices you need to make
-- **What's still uncertain** — open questions, assumptions, risks
+- **What I think you're trying to achieve** — restate the goal or requirement in your own words
+- **Key points I've captured** — summarise the features, constraints, or details discussed so far
+- **Where I'm unclear** — note anything ambiguous, contradictory, or missing
+- **Is this right?** — ask the user to confirm or correct your understanding
 
 ## Tone
 
-- Be direct and factual — no padding or praise
-- If there were trade-offs, state them plainly. Don't hide downsides.
-- If you're unsure about something, say so
+- Be direct. This is a comprehension check, not a performance.
+- If you got something wrong, state clearly where you misunderstood.
+- Do not add praise or commentary about the user's ideas.
 
 ## Usage
 
-The user can invoke this at any time via:
+Invoke at any time:
 
 ```
 /skill:explain-to-me
 ```
 
-It is also triggered automatically at phase boundaries (end of planning, end of architecture design, end of project initialisation) to confirm shared understanding before proceeding.
+Also triggered automatically at phase boundaries to ensure the agent's understanding is aligned before work continues.
