@@ -76,7 +76,27 @@ For each source, capture:
 
 ---
 
-## Save results
+## 3. Review sources with the user
+
+Before saving anything, present the gathered sources to the user:
+
+> "I found the following sources on {topic}. Would you like to exclude any?
+
+List each source with:
+- Title and link
+- Author/publisher (if identifiable)
+- Why it's relevant
+
+Let the user:
+- **Remove** sources they don't trust or consider biased
+- **Flag** specific parts of a source to ignore
+- **Add** sources they think are missing
+
+Take their feedback into account before synthesising the results.
+
+---
+
+## 4. Save results
 
 Write a summary to `.ai/knowledge/references/<topic>-research.md`:
 
