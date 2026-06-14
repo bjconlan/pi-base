@@ -140,6 +140,8 @@ Write a lightweight next epic placeholder to `.ai/backlog/${next_index}.md`:
 ...
 ```
 
+Consider adding a chore task at the end of the epic for code maintenance, cleanup, or performance analysis against the use cases defined. This keeps the codebase clean and verified as features are completed.
+
 Commit:
 
 ```bash

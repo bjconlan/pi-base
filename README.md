@@ -42,7 +42,7 @@ On each **new session** (not resumed or reloaded), the agent checks the project 
 |---------------|--------|--------|
 | No AGENTS.md, no README, no .ai/ | any | Prompts to run project initialisation (AGENTS.md, README, git, workspace, session storage) |
 | Initialised | `feature/*`, `experiment/*` | Auto-starts the full planning workflow by reading `templates/branch-workflow.md` |
-| Initialised | `fix/*`, `hotfix/*`, `chore/*`, `docs/*` | Auto-starts implementation stage directly (impact analysis → implement → verify → review) |
+| Initialised | `hotfix/*`, `chore/*` | Auto-starts implementation stage directly (impact analysis → implement → verify → review) |
 | Initialised | `main`, `master`, or other | Default behaviour — no auto-workflow |
 
 Continued sessions (resume) and manual `/skill:planning` invocation are unaffected.

@@ -114,6 +114,7 @@ export default function (pi: ExtensionAPI) {
         break;
 
       case "hotfix":
+      case "chore":
         await new Promise((r) => setTimeout(r, 800));
         ctx.ui.notify(`On ${branch} — jumping to implementation...`, "info");
         pi.sendUserMessage(

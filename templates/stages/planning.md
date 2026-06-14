@@ -75,12 +75,14 @@ From the goal summary, derive a branch name using the appropriate prefix:
 |--------|-------------|
 | `feature/` | New features, enhancements, refactors |
 | `hotfix/`  | Urgent bug fixes for the current release |
+| `chore/`   | Code maintenance, cleanup, performance analysis |
 
 Add custom branch types per project as needed. Format: `<prefix>/<short-snaked-description>`
 
 Examples:
 - `feature/add_agent_dialog`
 - `hotfix/crash-on-null-input`
+- `chore/perf-analysis`
 
 ### 5. Write the Plan
 

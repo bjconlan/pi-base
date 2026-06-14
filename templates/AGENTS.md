@@ -14,6 +14,7 @@ Workflows are composed from available stages per branch type:
 |-------------|--------|
 | `feature/` | Planning → Implementation → Review |
 | `hotfix/` | Implementation → Review (minimal, fast track) |
+| `chore/`  | Implementation — code maintenance, cleanup, performance analysis |
 
 Additional branch types can be defined per project — add them here when needed.
 
@@ -166,6 +167,7 @@ Use the following prefixes for branches:
 |--------|-------------|
 | `feature/` | New features, enhancements, refactors |
 | `hotfix/`  | Urgent bug fixes for the current release |
+| `chore/`   | Code maintenance, cleanup, performance analysis |
 
 Add custom branch types as needed.
 
