@@ -49,6 +49,8 @@ For each feature:
 
 Features group tasks. Each feature can contain multiple tasks.
 
+If a feature depends on a technology or approach you're uncertain about, run `/skill:assimilate-knowledge` to research it before defining tasks.
+
 After defining a feature, run `/skill:explain-to-me` to clarify its goals and confirm shared understanding before moving to the next feature.
 
 ### Define Tasks

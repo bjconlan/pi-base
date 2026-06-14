@@ -61,7 +61,7 @@ Starting from the API/contract layer, work back down:
 
 Iterate bottom-up and top-down until the architecture is coherent. The goal is a clear separation of concerns where each layer has a single responsibility and a natural verification strategy.
 
-Confirm the data types and API contracts with the user before moving on. Implementation details can remain vague at this stage.
+Confirm the data types and API contracts with the user before moving on. Implementation details can remain vague at this stage. If any technology choices or architectural patterns are unfamiliar, run `/skill:assimilate-knowledge` to research them.
 
 Write the architecture notes to `.ai/knowledge/architecture.md` (or update the existing file). This ensures the next session or stage can reload the design context from disk rather than relying on conversation history.
 
