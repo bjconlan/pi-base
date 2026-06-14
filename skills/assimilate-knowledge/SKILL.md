@@ -99,26 +99,29 @@ General web search for recent technical content:
 
 ### X / Twitter and Spotify podcasts
 
-These platforms require authentication for their APIs. Ask the user:
-
-> "To search X/Twitter or Spotify, I'll need an API key or bearer token. Do you have one you'd like to provide?"
-
-If the user provides credentials, use them with curl:
+These platforms require API credentials. First, check whether the user has credentials set in environment variables:
 
 ```bash
-# X/Twitter API v2 (requires Bearer token)
-# curl -s -H "Authorization: Bearer $TOKEN" "https://api.twitter.com/2/tweets/search/recent?query={topic}&max_results=10"
+# X/Twitter
+if [ -n "$TWITTER_BEARER_TOKEN" ]; then
+  curl -s -H "Authorization: Bearer $TWITTER_BEARER_TOKEN" \
+    "https://api.twitter.com/2/tweets/search/recent?query={topic}&max_results=10"
+fi
 
-# Spotify search (requires access token from client credentials flow)
-# curl -s -X POST "https://accounts.spotify.com/api/token" \
-#   -H "Content-Type: application/x-www-form-urlencoded" \
-#   -d "grant_type=client_credentials&client_id=$ID&client_secret=$SECRET"
-# Then use the token to search:
-# curl -s -H "Authorization: Bearer $TOKEN" \
-#   "https://api.spotify.com/v1/search?q={topic}&type=episode&limit=10"
+# Spotify
+if [ -n "$SPOTIFY_CLIENT_ID" ] && [ -n "$SPOTIFY_CLIENT_SECRET" ]; then
+  TOKEN=$(curl -s -X POST "https://accounts.spotify.com/api/token" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "grant_type=client_credentials&client_id=$SPOTIFY_CLIENT_ID&client_secret=$SPOTIFY_CLIENT_SECRET" \
+    | python3 -c "import json,sys; print(json.load(sys.stdin).get('access_token',''))")
+  [ -n "$TOKEN" ] && curl -s -H "Authorization: Bearer $TOKEN" \
+    "https://api.spotify.com/v1/search?q={topic}&type=episode&limit=10"
+fi
 ```
 
-If the user doesn't have credentials or prefers not to share them, fall back to `site:` web search or ask for specific links.
+If credentials aren't available, ask the user:
+
+> "I can also search X/Twitter and Spotify if you have API credentials. Otherwise, the other sources (YouTube, Reddit, BlueSky, articles) usually cover most topics."
 
 ---
 
