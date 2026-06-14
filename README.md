@@ -7,7 +7,7 @@ Personal pi preferences and configuration package.
 | Resource | Source | Description |
 |----------|--------|-------------|
 | **Extension** | `extensions/setup-detector.ts` | Detects fresh projects (no AGENTS.md, README, or .ai/) and prompts to run through initialisation on new session. |
-| **Extension** | `extensions/workflow-router.ts` | On new sessions, detects the git branch and auto-starts the appropriate workflow (planning for feature/experiment, implementation for fix/hotfix/chore/docs). |
+| **Extension** | `extensions/workflow-router.ts` | On new sessions, detects the git branch and auto-starts the appropriate workflow (planning for feature, implementation for hotfix). Custom branch types can be added per project. |
 | **Extension** | `extensions/file-hash-guard.ts` | Guards write/edit calls — warns if a file changed externally since the agent last read it, and asks for confirmation before overwriting. |
 | **Extension** | `extensions/response-style.ts` | Automatically injects response style guidelines and co-author convention into every session's system prompt. |
 | **Template** | `templates/branch-workflow.md` | Stage composition reference for branch-based workflows. Maps branch types to stage files (planning, implementation, review). |

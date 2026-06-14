@@ -12,9 +12,10 @@ Workflows are composed from available stages per branch type:
 
 | Branch type | Stages |
 |-------------|--------|
-| `feature/`, `experiment/` | Planning → Implementation → Review |
-| `fix/`, `hotfix/` | Implementation → Review |
-| `chore/`, `docs/` | Implementation |
+| `feature/` | Planning → Implementation → Review |
+| `hotfix/` | Implementation → Review (minimal, fast track) |
+
+Additional branch types can be defined per project — add them here when needed.
 
 ### Stage 1 — Planning
 Interview, architecture design, prototyping, and plan writing. Output is a verified plan stored in `.ai/{branch-type}/{branch-name}.md`.
@@ -165,10 +166,8 @@ Use the following prefixes for branches:
 |--------|-------------|
 | `feature/` | New features, enhancements, refactors |
 | `hotfix/`  | Urgent bug fixes for the current release |
-| `fix/`     | Non-urgent bug fixes |
-| `chore/`   | Maintenance, tooling, dependencies |
-| `docs/`    | Documentation only |
-| `experiment/` | Exploratory or throwaway work |
+
+Add custom branch types as needed.
 
 Format: `<prefix>/<short-snaked-description>`
 

@@ -7,11 +7,9 @@ This document defines the stages available and how they compose per branch type.
 | Branch type | Stages |
 |-------------|--------|
 | `feature/` | [`planning`](stages/planning.md) → [`implementation`](stages/implementation.md) → [`review`](stages/review.md) |
-| `experiment/` | [`planning`](stages/planning.md) → [`implementation`](stages/implementation.md) → [`review`](stages/review.md) (lighter: skip second-agent reviews, minimise docs) |
-| `fix/` | [`implementation`](stages/implementation.md) → [`review`](stages/review.md) (lightweight review) |
 | `hotfix/` | [`implementation`](stages/implementation.md) → [`review`](stages/review.md) (minimal review, fast track) |
-| `chore/` | [`implementation`](stages/implementation.md) (skip outcomes doc) |
-| `docs/` | [`implementation`](stages/implementation.md) (no tests, lightweight review) |
+
+Users can define additional branch types per project in `AGENTS.md`.
 
 ## Cross-cutting conventions
 

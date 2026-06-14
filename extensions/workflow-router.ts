@@ -100,7 +100,6 @@ export default function (pi: ExtensionAPI) {
     // --- Route to workflow ---
     switch (prefix) {
       case "feature":
-      case "experiment":
         await new Promise((r) => setTimeout(r, 800));
         ctx.ui.notify(`On ${branch} — starting planning workflow...`, "info");
         pi.sendUserMessage(
@@ -114,10 +113,7 @@ export default function (pi: ExtensionAPI) {
         );
         break;
 
-      case "fix":
       case "hotfix":
-      case "chore":
-      case "docs":
         await new Promise((r) => setTimeout(r, 800));
         ctx.ui.notify(`On ${branch} — jumping to implementation...`, "info");
         pi.sendUserMessage(
