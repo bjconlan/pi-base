@@ -60,8 +60,14 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.on("session_start", async (_event, ctx) => {
-    // Only run for new sessions, not reloads or resumes
+    // Only run for new sessions, not reloads, resumes, or continues
     if (_event.reason !== "startup" && _event.reason !== "new") return;
+
+    // If the session already has messages, it's a continuation
+    try {
+      const entries = ctx.sessionManager.getEntries();
+      if (entries.length > 1) return;
+    } catch { /* non-fatal */ }
 
     const cwd = ctx.cwd;
 
