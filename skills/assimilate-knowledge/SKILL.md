@@ -99,7 +99,7 @@ General web search for recent technical content:
 
 ### X and Spotify podcasts
 
-These platforms require API credentials. Use the `resolve_auth` tool to check for credentials and get the auth header:
+These platforms require API credentials. Use the `resolve_auth` tool (from the oauth-resolver extension) to check for credentials and get the auth header:
 
 ```
 # The agent calls: resolve_auth(service: "x", promptUser: true)

@@ -1,12 +1,12 @@
 /**
- * Auth Resolver Extension
+ * OAuth Resolver Extension
  *
- * Resolves authentication tokens for external service APIs.
+ * Resolves OAuth/bearer tokens for external service APIs (X, Spotify, etc.).
  * Checks environment variables first, then offers to store
  * user-provided credentials for the session.
  *
  * Used by the assimilate-knowledge skill when accessing
- * authenticated APIs like X/Twitter or Spotify.
+ * authenticated APIs.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
