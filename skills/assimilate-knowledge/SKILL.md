@@ -15,7 +15,23 @@ When a topic needs current information — a new technology, library version, AP
 
 ---
 
-## Sources to check
+## 1. Scope the research with the user
+
+Before searching, tell the user what you're planning to research and why:
+
+> "I'm going to research {topic} to understand {reason — e.g., current best practices, recent changes, suitability for our use case}."
+
+Then ask:
+
+- "Are there specific aspects you want me to focus on?"
+- "Do you follow any particular people, accounts, or publications on this topic whose content you trust?"
+- "Are there any specialised forums, sites, or communities relevant to this field?"
+
+Refine your search terms and source priorities based on their answers.
+
+---
+
+## 2. Sources to check
 
 Try these in order of usefulness for the topic:
 
