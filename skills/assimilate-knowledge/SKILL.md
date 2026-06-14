@@ -99,7 +99,26 @@ General web search for recent technical content:
 
 ### X / Twitter and Spotify podcasts
 
-These platforms require authentication for their APIs. If you have access to a web search tool, use `site:` directives. Otherwise, ask the user if they have specific links or recommendations for these sources.
+These platforms require authentication for their APIs. Ask the user:
+
+> "To search X/Twitter or Spotify, I'll need an API key or bearer token. Do you have one you'd like to provide?"
+
+If the user provides credentials, use them with curl:
+
+```bash
+# X/Twitter API v2 (requires Bearer token)
+# curl -s -H "Authorization: Bearer $TOKEN" "https://api.twitter.com/2/tweets/search/recent?query={topic}&max_results=10"
+
+# Spotify search (requires access token from client credentials flow)
+# curl -s -X POST "https://accounts.spotify.com/api/token" \
+#   -H "Content-Type: application/x-www-form-urlencoded" \
+#   -d "grant_type=client_credentials&client_id=$ID&client_secret=$SECRET"
+# Then use the token to search:
+# curl -s -H "Authorization: Bearer $TOKEN" \
+#   "https://api.spotify.com/v1/search?q={topic}&type=episode&limit=10"
+```
+
+If the user doesn't have credentials or prefers not to share them, fall back to `site:` web search or ask for specific links.
 
 ---
 
