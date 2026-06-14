@@ -50,8 +50,11 @@ Search for talks, tutorials, and conference presentations:
 # Via web search
 # site:youtube.com {topic} talk|tutorial|conference 2025|2026
 
-# If youtube-transcript skill is installed, fetch transcripts:
-# ./transcript.js <video-url>
+# To fetch a transcript once you have a video URL, extract the video ID
+# and use the public transcript API:
+# VIDEO_ID=$(echo "$URL" | grep -oP '(?<=v=|youtu\.be/)[a-zA-Z0-9_-]{11}')
+# curl -s "https://youtubetranscript.com/?v=$VIDEO_ID&format=json" | \
+#   python3 -c "import json,sys; data=json.load(sys.stdin); [print(f'[{e[\"offset\"]}] {e[\"text\"]}') for e in data]" 2>/dev/null || echo "Transcript not available"
 ```
 
 ### Reddit
@@ -105,7 +108,7 @@ These platforms require authentication for their APIs. If you have access to a w
 For each source retrieved:
 
 - **Web pages and articles** — read the content via `curl` or the read tool
-- **YouTube videos** — if the `youtube-transcript` skill is installed, fetch the transcript for summarisation
+- **YouTube videos** — fetch the transcript via the public transcript API (see YouTube section above) and summarise it
 - **Reddit threads** — read the post and top comments via the JSON API:
 
   ```bash
