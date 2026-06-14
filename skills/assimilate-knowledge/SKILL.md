@@ -97,14 +97,14 @@ General web search for recent technical content:
 # Or general: {topic} "release notes"|"getting started" 2025|2026
 ```
 
-### X / Twitter and Spotify podcasts
+### X and Spotify podcasts
 
 These platforms require API credentials. Use the `resolve_auth` tool to check for credentials and get the auth header:
 
 ```
-# The agent calls: resolve_auth(service: "twitter", promptUser: true)
+# The agent calls: resolve_auth(service: "x", promptUser: true)
 # If a token is found, it returns the Authorization header to use with curl
-# Then: curl -s -H "<auth-header>" "https://api.twitter.com/2/tweets/search/recent?query={topic}&max_results=10"
+# Then: curl -s -H "<auth-header>" "https://api.x.com/2/tweets/search/recent?query={topic}&max_results=10"
 
 # For Spotify:
 # resolve_auth(service: "spotify", promptUser: true)

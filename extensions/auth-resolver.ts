@@ -15,7 +15,7 @@ const sessionTokens: Record<string, string> = {};
 
 // Known env vars for common services
 const SERVICE_AUTH: Record<string, { envVars: string[]; header: (token: string) => string }> = {
-  twitter: {
+  'x': {
     envVars: ["TWITTER_BEARER_TOKEN", "X_BEARER_TOKEN"],
     header: (token) => `Authorization: Bearer ${token}`,
   },
@@ -44,13 +44,13 @@ export default function (pi: ExtensionAPI) {
     name: "resolve_auth",
     label: "Resolve Auth",
     description:
-      "Resolves authentication for an external service API. Call this before making authenticated requests. Supported services: twitter, spotify.",
+      "Resolves authentication for an external service API. Call this before making authenticated requests. Supported services: x, spotify.",
     parameters: {
       type: "object",
       properties: {
         service: {
           type: "string",
-          description: "Service name (twitter, spotify)",
+          description: "Service name (x, spotify)",
         },
         promptUser: {
           type: "boolean",
