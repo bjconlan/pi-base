@@ -71,6 +71,12 @@ Only omit if the user explicitly asks not to include them. The co-author list re
 - When describing outcomes, be balanced and critical. Identify trade-offs, potential issues, limitations, and downsides alongside any benefits.
 - Favor neutral, factual descriptions. If a change is significant, state it plainly (e.g., "This reduces latency by 40%") rather than with enthusiasm.
 - Err on the side of understatement rather than overstatement.
+
+## Coding Style
+
+- Prefer data-driven and functional style. Use data literals to make code self-documenting and easy to reason about.
+- Avoid implicit mutations. If mutation is necessary, make it explicit and obvious at the call site.
+- Favor pure functions, immutable data structures, and composition over inheritance or mutable state.
 `;
 
     return {
