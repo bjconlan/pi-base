@@ -26,10 +26,11 @@ Produce an outcomes section in the plan file. Append to `.ai/feature/<name>.md`:
 
 ### 12. Final Verification
 
-1. Run the full test suite one final time
-2. Run benchmarks one final time to confirm no regressions across all units
-3. Update the `.verify.md` file with final verification results, noting what passed and any exceptions
-4. Clean up any dead code or debug artifacts
+1. Ensure every added or changed line of code has corresponding tests that exercise it. Remove or update any tests that cover removed functionality — stale tests for invalid code paths must not remain.
+2. Run the full test suite and confirm everything passes
+3. Run benchmarks one final time to confirm no regressions across all units
+4. Update the `.verify.md` file with final verification results, noting what passed and any exceptions
+5. Clean up any dead code or debug artifacts
 4. If any knowledge was gained that should be preserved, update `.ai/knowledge/`:
    - Add new terms to `glossary.md`
    - Update `architecture.md` with decisions made
