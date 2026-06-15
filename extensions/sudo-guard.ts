@@ -36,6 +36,7 @@ export default function (pi: ExtensionAPI) {
     // Hand control to native sudo -v via the terminal
     const result = spawnSync("sudo", ["-v"], {
       stdio: "inherit",
+      shell: true,
       timeout: 30000,
     });
 
