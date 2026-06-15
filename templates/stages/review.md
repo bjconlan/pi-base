@@ -31,11 +31,12 @@ Produce an outcomes section in the plan file. Append to `.ai/feature/<name>.md`:
 3. Run benchmarks one final time to confirm no regressions across all units
 4. Update the `.verify.md` file with final verification results, noting what passed and any exceptions
 5. Clean up any dead code or debug artifacts
-6. Update `.ai/knowledge/` with any knowledge gained during this feature:
-   - Add new terms, types, or patterns to `glossary.md`
-   - Update `architecture.md` with decisions made or changed
-   - Add reference links or research summaries to `references/`
-   - Add new source mappings to `bibliography.md`
+6. Update `.ai/` with any knowledge gained during this feature:
+   - Finalise `.ai/feature/<name>.md` with outcomes and status
+   - Add new terms, types, or patterns to `.ai/knowledge/glossary.md`
+   - Update `.ai/knowledge/architecture.md` with decisions made or changed
+   - Add reference links or research summaries to `.ai/knowledge/references/`
+   - Add new source mappings to `.ai/knowledge/bibliography.md`
    
    This is the minimum bar — knowledge must be captured before the feature is merged, so future sessions benefit from what was learned.
 
