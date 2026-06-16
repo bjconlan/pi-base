@@ -6,9 +6,9 @@ This document defines the stages available and how they compose per branch type.
 
 | Branch type | Stages |
 |-------------|--------|
-| `feature/` | [`planning`](stages/planning.md) → [`implementation`](stages/implementation.md) → [`review`](stages/review.md) |
-| `hotfix/` | [`implementation`](stages/implementation.md) → [`review`](stages/review.md) (minimal review, fast track) |
-| `chore/`  | [`implementation`](stages/implementation.md) — code maintenance, cleanup, performance analysis |
+| `feature/` | [Planning](stages/planning.md) → [Implementation](stages/implementation.md) → [Review](stages/review.md) |
+| `hotfix/` | [Implementation](stages/implementation.md) → [Review](stages/review.md) — minimal review, fast track |
+| `chore/`  | [Implementation](stages/implementation.md) — code maintenance, cleanup, performance analysis |
 
 Users can define additional branch types per project in `AGENTS.md`.
 
