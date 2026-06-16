@@ -138,7 +138,7 @@ export default function (pi: ExtensionAPI) {
               `Read through the epics in order (lowest to highest index). For each epic, check if it has incomplete tasks. ` +
               `If an epic has incomplete tasks, list them to the user and ask which they'd like to work on. ` +
               `If all tasks in the current epic are complete, move to the next epic. ` +
-              `If all epics are complete, ask the user if they'd like to run /skill:backlog-planning to define the next epic.\n\n` +
+              `If all epics are complete or no epics exist, ask the user if they'd like to run /skill:backlog-planning to define the next epic.\n\n` +
               `Once the user selects a task, create the feature branch with \`git checkout -b feature/<task-name>\` ` +
               `and begin the planning workflow (templates/stages/planning.md). No need to restart pi — continue in this session.`,
               { deliverAs: "steer" },
