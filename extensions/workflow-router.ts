@@ -76,26 +76,39 @@ export default function (pi: ExtensionAPI) {
 
     // --- Existing session check ---
     const historyDir = join(cwd, ".ai", "history");
-    let existingSession: string | null = null;
+    let existingSessions: string[] = [];
     if (existsSync(historyDir)) {
-      existingSession = findSessionForBranch(historyDir, branch);
+      existingSessions = findSessionsForBranch(historyDir, branch);
     }
 
-    // --- Prompt logic ---
+    // --- Prompt logic ---    // --- Prompt logic ---
     const prefix = branch.split("/")[0];
 
-    // If an existing session was found, offer to resume
-    if (existingSession) {
+    // If existing sessions were found, offer to resume
+    if (existingSessions.length > 0) {
+      let chosenSession: string;
+      if (existingSessions.length === 1) {
+        chosenSession = existingSessions[0];
+      } else {
+        const choice = await ctx.ui.select(
+          `Multiple sessions found for ${branch}`,
+          existingSessions,
+        );
+        if (!choice) return;
+        chosenSession = choice;
+      }
+
       const resume = await ctx.ui.confirm(
-        `Existing session for ${branch}`,
-        `A previous agent session was found for this branch (${existingSession}). Would you like to resume it?\n\n` +
-        `"No" will start fresh and you may lose context from the previous session.`,
+        `Resume session for ${branch}`,
+        `A previous session was found (${chosenSession}). Resume it?\n\n"No" starts fresh.`,
       );
       if (resume) {
-        ctx.ui.notify(`Resuming session: ${existingSession}`, "info");
+        ctx.ui.notify(`Resuming session: ${chosenSession}`, "info");
         pi.sendUserMessage(
-          `We're resuming work on \`${branch}\`. An existing session file was found at \`${existingSession}\`. ` +
-          `Read the plan file at \`.ai/${branch}.md\` (if it exists) and check its \`## Status\` section to determine the last active stage and next action. Also check \`.ai/${branch}.verify.md\` (if it exists) for verification history. Reference the stage files at \`templates/stages/\` to continue from where work was left off. Review the current state of review the current state of ` +
+          `We're resuming work on \`${branch}\`. An existing session file was found at \`${chosenSession}\`. ` +
+          `Read the plan file at \`.ai/${branch}.md\` (if it exists) and check its \`## Status\` section to determine the last active stage and next action. ` +
+          `Also check \`.ai/${branch}.verify.md\` (if it exists) for verification history. ` +
+          `Reference the stage files at \`templates/stages/\` to continue from where work was left off. Review the current state of ` +
           `the branch (\`git log --oneline -10\`, \`git diff\`), check \`.ai/knowledge/\` for any ` +
           `relevant context, and present a summary to the user before continuing.`,
           { deliverAs: "steer" },
@@ -182,23 +195,24 @@ function listBacklogFiles(backlogDir: string): string[] {
   }
 }
 
-function findSessionForBranch(historyDir: string, branch: string): string | null {
+function findSessionsForBranch(historyDir: string, branch: string): string[] {
+  const results: string[] = [];
   try {
     const entries = readdirSync(historyDir, { withFileTypes: true });
     for (const entry of entries) {
       if (entry.isDirectory()) {
-        const found = findSessionForBranch(join(historyDir, entry.name), branch);
-        if (found) return found;
+        results.push(...findSessionsForBranch(join(historyDir, entry.name), branch));
       } else if (entry.name.endsWith(".jsonl")) {
         const filePath = join(historyDir, entry.name);
         try {
-          const header = readFileSync(filePath, "utf-8").split("\n")[0];
-          if (header.includes(`"${branch}"`) || header.includes(branch)) {
-            return filePath;
+          const content = readFileSync(filePath, "utf-8");
+          // Scan all lines for the branch name appearing in a "name" field
+          if (content.includes(`"name":"${branch}"`)) {
+            results.push(filePath);
           }
         } catch { /* skip unreadable */ }
       }
     }
   } catch { /* ignore */ }
-  return null;
+  return results;
 }
