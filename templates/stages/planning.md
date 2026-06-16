@@ -206,10 +206,14 @@ git worktree add ../<repo>-<name> feature/<name>
 
 Change to the worktree directory for all subsequent work.
 
-Ensure the `.ai/` directory structure exists in the worktree:
+Ensure the `.ai/` directory structure exists in the worktree, and configure session storage to keep this worktree's history isolated:
 
 ```bash
-mkdir -p .ai/feature .ai/knowledge
+mkdir -p .ai/feature .ai/knowledge .ai/history
+mkdir -p .pi
+echo '{
+  "sessionDir": "../.ai/history"
+}' > .pi/settings.json
 ```
 
 Write the plan to `.ai/feature/<name>.md`. Include a `## Status` section at the bottom to track execution progress:
