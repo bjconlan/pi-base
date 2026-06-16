@@ -63,10 +63,13 @@ export default function (pi: ExtensionAPI) {
     // Only run for new sessions, not reloads, resumes, or continues
     if (_event.reason !== "startup" && _event.reason !== "new") return;
 
-    // If the session already has messages, it's a continuation
+    // If the session already has user or assistant messages, it's a continuation
     try {
       const entries = ctx.sessionManager.getEntries();
-      if (entries.length > 1) return;
+      const hasContent = entries.some(
+        (e: any) => e.type === "user" || e.type === "assistant" || e.role === "user" || e.role === "assistant",
+      );
+      if (hasContent) return;
     } catch { /* non-fatal */ }
 
     const cwd = ctx.cwd;

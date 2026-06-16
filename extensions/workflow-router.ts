@@ -16,10 +16,13 @@ export default function (pi: ExtensionAPI) {
     if (_event.reason !== "startup" && _event.reason !== "new") return;
     if (!ctx.hasUI) return;
 
-    // If the session already has messages, it's a continuation — skip auto-workflow
+    // If the session already has user or assistant messages, it's a continuation
     try {
       const entries = ctx.sessionManager.getEntries();
-      if (entries.length > 1) return;
+      const hasContent = entries.some(
+        (e: any) => e.type === "user" || e.type === "assistant" || e.role === "user" || e.role === "assistant",
+      );
+      if (hasContent) return;
     } catch { /* non-fatal */ }
 
     const cwd = ctx.cwd;
