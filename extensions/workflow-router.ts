@@ -11,7 +11,33 @@ import { join } from "node:path";
 import { execSync } from "node:child_process";
 
 export default function (pi: ExtensionAPI) {
-  // Watch for branch changes mid-session and update session name
+  // Register a command to create a feature branch and start a new session
+  pi.registerCommand("start-feature", {
+    description: "Create a feature branch and start a new session.",
+    handler: async (args, ctx) => {
+      const branchName = args?.trim();
+      if (!branchName) {
+        ctx.ui.notify("Usage: /start-feature <branch-name>", "error");
+        return;
+      }
+
+      try {
+        execSync(`git checkout -b ${branchName}`, {
+          cwd: ctx.cwd,
+          stdio: "ignore",
+          timeout: 10000,
+        });
+      } catch {
+        ctx.ui.notify(`Failed to create branch: ${branchName}`, "error");
+        return;
+      }
+
+      ctx.ui.notify(`Branch ${branchName} created, starting new session...`, "info");
+      await ctx.newSession();
+    },
+  });
+
+  // Update session name when branch changes mid-session
   pi.on("tool_result", (evt) => {
     if (evt.toolName !== "bash" || evt.isError) return;
     const cmd = (evt.input.command as string) || "";
@@ -125,8 +151,8 @@ export default function (pi: ExtensionAPI) {
               `If an epic has incomplete tasks, list them to the user and ask which they'd like to work on. ` +
               `If all tasks in the current epic are complete, move to the next epic. ` +
               `If all epics are complete or no epics exist, ask the user if they'd like to run /skill:backlog-planning to define the next epic.\n\n` +
-              `Once the user selects a task, ask if they want you to create the branch with \`git checkout -b feature/<task-name>\`. ` +
-              `If yes, create it and begin the planning workflow (templates/stages/planning.md) in this session.`,
+              `Once the user selects a task, ask if they want to start it. ` +
+              `If yes, tell them to type \`/start-feature feature/<task-name>\` to create the branch and start a fresh session.`,
               { deliverAs: "steer" },
             );
             break;

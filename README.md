@@ -61,7 +61,7 @@ flowchart TD
     BRANCH_TYPE -->|chore| CHORE["Start implementation\nStage: implementation"]
     BRANCH_TYPE -->|main/master| MAIN{"Backlog\nfiles exist?"}
     MAIN -->|yes| BACKLOG["Read epics, find first with\nincomplete tasks, list to user"]
-    BACKLOG --> PICK_TASK["User picks a task,\nagent creates branch,\ncontinues in this session"]
+    BACKLOG --> PICK_TASK["User picks a task,\ntypes /start-feature feature/name,\nfresh session starts automatically"]
     MAIN -->|no| BACKLOG_START["Suggest /skill:backlog-planning
 to define first epic"]
 
@@ -81,6 +81,12 @@ to define first epic"]
 ## Session Storage
 
 Session logs are stored per-worktree in `.ai/history/`. Each `git worktree add` creates a separate directory with its own history, giving natural per-branch session isolation.
+
+## Commands
+
+| Command | When to use |
+|---------|-------------|
+| `/start-feature <name>` | After picking a task from the backlog, type this to create the branch and start a fresh session. E.g. `/start-feature feature/add-auth` |
 
 ## Skills
 
