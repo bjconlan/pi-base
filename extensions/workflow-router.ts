@@ -126,6 +126,23 @@ export default function (pi: ExtensionAPI) {
         break;
 
       default:
+        // On main/master, check for unfinished backlog items
+        if (branch === "main" || branch === "master") {
+          const backlogFiles = listBacklogFiles(join(cwd, ".ai", "backlog"));
+          if (backlogFiles.length >= 2) {
+            // Has a current epic with unfinished tasks
+            await new Promise((r) => setTimeout(r, 800));
+            ctx.ui.notify("On main branch with backlog items — suggest starting a feature branch", "info");
+            pi.sendUserMessage(
+              `You're on \`${branch}\` but there are backlog items in \`.ai/backlog/\` that haven't been started yet. ` +
+              `To begin work on a task, create a feature branch (e.g. \`git checkout -b feature/<task-name>\`) and start a new pi session. ` +
+              `The workflow will start automatically based on the branch type.`,
+              { deliverAs: "steer" },
+            );
+            break;
+          }
+        }
+
         if (hasUncommitted || aheadCount > 0 || behindCount > 0) {
           await new Promise((r) => setTimeout(r, 800));
           ctx.ui.notify(`Branch ${branch} has ${stateWarnings.join(", ")}.`, "warning");
@@ -138,6 +155,14 @@ export default function (pi: ExtensionAPI) {
         break;
     }
   });
+}
+
+function listBacklogFiles(backlogDir: string): string[] {
+  try {
+    return readdirSync(backlogDir).filter((f) => f.endsWith(".md"));
+  } catch {
+    return [];
+  }
 }
 
 function findSessionForBranch(historyDir: string, branch: string): string | null {
