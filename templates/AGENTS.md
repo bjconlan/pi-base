@@ -18,16 +18,7 @@ Workflows are composed from available stages per branch type:
 
 Additional branch types can be defined per project — add them here when needed.
 
-### Stage 1 — Planning
-Interview, architecture design, prototyping, and plan writing. Output is a verified plan stored in `.ai/{branch-type}/{branch-name}.md`.
-
-### Stage 2 — Implementation
-Build and test each unit of work with parallel test development and benchmarking. Each unit must pass its verification checkpoint before moving to the next.
-
-### Stage 3 — Review
-Summarize outcomes, verify against the original goal, present for user review, and clean up after merge.
-
-Stage boundaries are checkpoints, not walls — iteration occurs both within and between stages.
+See [`templates/branch-workflow.md`](../templates/branch-workflow.md) for detailed stage outlines.
 
 ---
 
