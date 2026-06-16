@@ -132,11 +132,15 @@ export default function (pi: ExtensionAPI) {
           if (backlogFiles.length >= 2) {
             // Has a current epic with unfinished tasks
             await new Promise((r) => setTimeout(r, 800));
-            ctx.ui.notify("On main branch with backlog items — suggest starting a feature branch", "info");
+            ctx.ui.notify("On main branch with backlog items — checking tasks", "info");
             pi.sendUserMessage(
-              `You're on \`${branch}\` but there are backlog items in \`.ai/backlog/\` that haven't been started yet. ` +
-              `To begin work on a task, create a feature branch (e.g. \`git checkout -b feature/<task-name>\`) and start a new pi session. ` +
-              `The workflow will start automatically based on the branch type.`,
+              `You're on \`${branch}\` but there are backlog items in \`.ai/backlog/\` that haven't been started yet.\n\n` +
+              `Read through the epics in order (lowest to highest index). For each epic, check if it has incomplete tasks. ` +
+              `If an epic has incomplete tasks, list them to the user and ask which they'd like to work on. ` +
+              `If all tasks in the current epic are complete, move to the next epic. ` +
+              `If all epics are complete, ask the user if they'd like to run /skill:backlog-planning to define the next epic.\n\n` +
+              `Once the user selects a task, create the feature branch with \`git checkout -b feature/<task-name>\` ` +
+              `and begin the planning workflow (templates/stages/planning.md). No need to restart pi — continue in this session.`,
               { deliverAs: "steer" },
             );
             break;
