@@ -131,6 +131,16 @@ export default function (pi: ExtensionAPI) {
             );
             break;
           }
+
+          // No backlog files — suggest creating one
+          await new Promise((r) => setTimeout(r, 800));
+          ctx.ui.notify("On main with no backlog — suggest running /skill:backlog-planning", "info");
+          pi.sendUserMessage(
+            `You're on \`${branch}\` but there's no backlog yet. ` +
+            `Would you like to run /skill:backlog-planning to define epics, features, and tasks?`,
+            { deliverAs: "steer" },
+          );
+          break;
         }
 
         if (hasUncommitted || aheadCount > 0 || behindCount > 0) {

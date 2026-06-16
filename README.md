@@ -62,7 +62,8 @@ flowchart TD
     BRANCH_TYPE -->|main/master| MAIN{"Backlog\nfiles exist?"}
     MAIN -->|yes| BACKLOG["Read epics, find first with\nincomplete tasks, list to user"]
     BACKLOG --> PICK_TASK["User picks a task,\nagent creates worktree,\nstarts planning workflow"]
-    MAIN -->|no| IDLE["No auto-workflow"]
+    MAIN -->|no| BACKLOG_START["Suggest /skill:backlog-planning
+to define first epic"]
 
     FEATURE --> EXPLAIN2
     HOTFIX --> EXPLAIN2
