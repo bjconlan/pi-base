@@ -1,12 +1,12 @@
 /**
  * Workflow Router Extension
  *
- * On new sessions, detects the current git branch, checks for existing
- * sessions, and routes to the appropriate workflow or resume prompt.
+ * On new sessions, detects the current git branch and routes to the
+ * appropriate workflow. Session isolation is handled by worktrees.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { execSync } from "node:child_process";
 
@@ -22,7 +22,7 @@ export default function (pi: ExtensionAPI) {
   });
 
   pi.on("session_start", async (_event, ctx) => {
-    // Only run for fresh sessions, not resumes, reloads, or continues
+    // Only run for fresh sessions, not reloads or continues
     if (_event.reason !== "startup" && _event.reason !== "new") return;
     if (!ctx.hasUI) return;
 
@@ -74,48 +74,8 @@ export default function (pi: ExtensionAPI) {
       }
     } catch { /* non-fatal */ }
 
-    // --- Existing session check ---
-    const historyDir = join(cwd, ".ai", "history");
-    let existingSessions: string[] = [];
-    if (existsSync(historyDir)) {
-      existingSessions = findSessionsForBranch(historyDir, branch);
-    }
-
     // --- Prompt logic ---    // --- Prompt logic ---
     const prefix = branch.split("/")[0];
-
-    // If existing sessions were found, offer to resume
-    if (existingSessions.length > 0) {
-      let chosenSession: string;
-      if (existingSessions.length === 1) {
-        chosenSession = existingSessions[0];
-      } else {
-        const choice = await ctx.ui.select(
-          `Multiple sessions found for ${branch}`,
-          existingSessions,
-        );
-        if (!choice) return;
-        chosenSession = choice;
-      }
-
-      const resume = await ctx.ui.confirm(
-        `Resume session for ${branch}`,
-        `A previous session was found (${chosenSession}). Resume it?\n\n"No" starts fresh.`,
-      );
-      if (resume) {
-        ctx.ui.notify(`Resuming session: ${chosenSession}`, "info");
-        pi.sendUserMessage(
-          `We're resuming work on \`${branch}\`. An existing session file was found at \`${chosenSession}\`. ` +
-          `Read the plan file at \`.ai/${branch}.md\` (if it exists) and check its \`## Status\` section to determine the last active stage and next action. ` +
-          `Also check \`.ai/${branch}.verify.md\` (if it exists) for verification history. ` +
-          `Reference the stage files at \`templates/stages/\` to continue from where work was left off. Review the current state of ` +
-          `the branch (\`git log --oneline -10\`, \`git diff\`), check \`.ai/knowledge/\` for any ` +
-          `relevant context, and present a summary to the user before continuing.`,
-          { deliverAs: "steer" },
-        );
-        return;
-      }
-    }
 
     // Warn if branch isn't clean
     let stateWarnings: string[] = [];
@@ -193,39 +153,4 @@ function listBacklogFiles(backlogDir: string): string[] {
   } catch {
     return [];
   }
-}
-
-interface SessionInfo {
-  file: string;
-  timestamp: number;
-}
-
-function findSessionsForBranch(historyDir: string, branch: string): string[] {
-  const results: SessionInfo[] = [];
-  try {
-    const entries = readdirSync(historyDir, { withFileTypes: true });
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        results.push(...findSessionsForBranch(join(historyDir, entry.name), branch));
-      } else if (entry.name.endsWith(".jsonl")) {
-        const filePath = join(historyDir, entry.name);
-        try {
-          const content = readFileSync(filePath, "utf-8");
-          for (const line of content.split("\n")) {
-            try {
-              const parsed = JSON.parse(line);
-              if (parsed.type === "session_info" && parsed.name === branch) {
-                results.push({ file: filePath, timestamp: parsed.timestamp || 0 });
-                break;
-              }
-            } catch { /* skip unparseable */ }
-          }
-        } catch { /* skip unreadable */ }
-      }
-    }
-  } catch { /* ignore */ }
-
-  // Sort by timestamp descending (most recent first)
-  results.sort((a, b) => b.timestamp - a.timestamp);
-  return results.map((r) => r.file);
 }
