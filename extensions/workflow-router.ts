@@ -129,7 +129,7 @@ export default function (pi: ExtensionAPI) {
         // On main/master, check for unfinished backlog items
         if (branch === "main" || branch === "master") {
           const backlogFiles = listBacklogFiles(join(cwd, ".ai", "backlog"));
-          if (backlogFiles.length >= 1) {
+          if (backlogFiles.length) {
             // Has at least one epic — check for incomplete tasks
             await new Promise((r) => setTimeout(r, 800));
             ctx.ui.notify("On main branch with backlog items — checking tasks", "info");
