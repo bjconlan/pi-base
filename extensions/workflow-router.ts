@@ -6,11 +6,21 @@
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { execSync } from "node:child_process";
 
 export default function (pi: ExtensionAPI) {
+  // Watch for branch changes mid-session and update session name
+  pi.on("tool_result", (evt) => {
+    if (evt.toolName !== "bash" || evt.isError) return;
+    const cmd = (evt.input.command as string) || "";
+    const match = cmd.match(/git\s+checkout\s+(?:-b\s+)?(\S+)/);
+    if (match) {
+      pi.setSessionName(match[1]);
+    }
+  });
+
   pi.on("session_start", async (_event, ctx) => {
     // Only run for fresh sessions, not resumes, reloads, or continues
     if (_event.reason !== "startup" && _event.reason !== "new") return;
