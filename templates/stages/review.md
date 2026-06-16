@@ -59,10 +59,9 @@ Ask the user to review the code:
 
 After the branch is merged:
 
-1. Remove the worktree to avoid stale checkouts:
+1. Delete the feature branch:
 
    ```bash
-   git worktree remove ../<repo>-<name>
    git branch -d feature/<name>
    ```
 

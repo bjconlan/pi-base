@@ -197,23 +197,16 @@ Present the review output to the user and ask if they want to amend the plan.
 
 #### If git is available
 
-Create the feature branch and a worktree:
+Create the feature branch:
 
 ```bash
-git branch feature/<name> <base-branch>     # or just the current commit
-git worktree add ../<repo>-<name> feature/<name>
+git checkout -b feature/<name>
 ```
 
-Change to the worktree directory for all subsequent work.
-
-Ensure the `.ai/` directory structure exists in the worktree, and configure session storage to keep this worktree's history isolated:
+Ensure the `.ai/` directory structure exists:
 
 ```bash
-mkdir -p .ai/feature .ai/knowledge .ai/history
-mkdir -p .pi
-echo '{
-  "sessionDir": "../.ai/history"
-}' > .pi/settings.json
+mkdir -p .ai/feature .ai/knowledge
 ```
 
 Write the plan to `.ai/feature/<name>.md`. Include a `## Status` section at the bottom to track execution progress:
