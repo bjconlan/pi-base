@@ -41,6 +41,32 @@ rm ~/.pi/agent/APPEND_SYSTEM.md
 
 Then run `/reload` in pi.
 
+## Stage Composition per Branch Type
+
+The three stages (planning, implementation, review) compose differently per branch type:
+
+```mermaid
+flowchart LR
+    subgraph FEATURE["feature/"]
+        direction LR
+        FP["Planning"] --> FI["Implementation"] --> FR["Review"]
+    end
+
+    subgraph HOTFIX["hotfix/"]
+        direction LR
+        HI["Implementation"] --> HR["Review"]
+    end
+
+    subgraph CHORE["chore/"]
+        direction LR
+        CI["Implementation"]
+    end
+
+    style FEATURE fill:#2a4a6a,color:#fff
+    style HOTFIX fill:#6a4a2a,color:#fff
+    style CHORE fill:#5a2a5a,color:#fff
+```
+
 ## Startup Behaviour
 
 ```mermaid
