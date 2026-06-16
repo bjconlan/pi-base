@@ -10,6 +10,14 @@ This document defines the stages available and how they compose per branch type.
 | `hotfix/` | [Implementation](stages/implementation.md) → [Review](stages/review.md) — minimal review, fast track |
 | `chore/`  | [Implementation](stages/implementation.md) — code maintenance, cleanup, performance analysis |
 
+### Stage outlines
+
+**Planning:** Based on the backlog feature, identify the tasks and request relevant reference context. Clarify use cases and ensure the outcome is clear with measurable criteria so completion meets user expectations. Feed any discovered or refined definitions, references, and bibliographic information back into `.ai/knowledge/`.
+
+**Implementation:** Work through tasks with code and tests. Ensure added code has coverage and removed code has its tests cleaned up. Run benchmarks for performance-sensitive changes. Commit with messages referencing the plan file.
+
+**Review:** Produce an outcomes document against the original plan. Run final tests and benchmarks. Verify knowledge base updates (glossary, architecture, references, bibliography, feature plan). Present to user for review. Merge only on explicit user approval.
+
 Users can define additional branch types per project in `AGENTS.md`.
 
 ## Cross-cutting conventions
