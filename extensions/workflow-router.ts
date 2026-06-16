@@ -165,7 +165,7 @@ export default function (pi: ExtensionAPI) {
               `If an epic has incomplete tasks, list them to the user and ask which they'd like to work on. ` +
               `If all tasks in the current epic are complete, move to the next epic. ` +
               `If all epics are complete or no epics exist, ask the user if they'd like to run /skill:backlog-planning to define the next epic.\n\n` +
-              `Once the user selects a task, create the feature branch with \`git checkout -b feature/<task-name>\` ` +
+              `Once the user selects a task, create the feature branch with \`git worktree add ../$(basename $(pwd))-feature-<task-name> && cd ../$(basename $(pwd))-feature-<task-name>\` ` +
               `and begin the planning workflow (templates/stages/planning.md). No need to restart pi — continue in this session.`,
               { deliverAs: "steer" },
             );
@@ -195,8 +195,13 @@ function listBacklogFiles(backlogDir: string): string[] {
   }
 }
 
+interface SessionInfo {
+  file: string;
+  timestamp: number;
+}
+
 function findSessionsForBranch(historyDir: string, branch: string): string[] {
-  const results: string[] = [];
+  const results: SessionInfo[] = [];
   try {
     const entries = readdirSync(historyDir, { withFileTypes: true });
     for (const entry of entries) {
@@ -206,13 +211,21 @@ function findSessionsForBranch(historyDir: string, branch: string): string[] {
         const filePath = join(historyDir, entry.name);
         try {
           const content = readFileSync(filePath, "utf-8");
-          // Scan all lines for the branch name appearing in a "name" field
-          if (content.includes(`"name":"${branch}"`)) {
-            results.push(filePath);
+          for (const line of content.split("\n")) {
+            try {
+              const parsed = JSON.parse(line);
+              if (parsed.type === "session_info" && parsed.name === branch) {
+                results.push({ file: filePath, timestamp: parsed.timestamp || 0 });
+                break;
+              }
+            } catch { /* skip unparseable */ }
           }
         } catch { /* skip unreadable */ }
       }
     }
   } catch { /* ignore */ }
-  return results;
+
+  // Sort by timestamp descending (most recent first)
+  results.sort((a, b) => b.timestamp - a.timestamp);
+  return results.map((r) => r.file);
 }
