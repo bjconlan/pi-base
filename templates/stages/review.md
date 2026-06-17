@@ -35,6 +35,7 @@ Produce an outcomes section in the plan file. Append to `.ai/feature/<name>.md`:
    - Finalise `.ai/feature/<name>.md` with outcomes and status
    - Add new terms, types, or patterns to `.ai/knowledge/glossary.md`
    - Update `.ai/knowledge/architecture.md` with decisions made or changed
+   - Ensure all decisions made during this feature are recorded in `.ai/knowledge/decisions.md`
    - Add reference links or research summaries to `.ai/knowledge/references/`
    - Add new source mappings to `.ai/knowledge/bibliography.md`
    

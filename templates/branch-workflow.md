@@ -27,3 +27,4 @@ These apply to all stages:
 - **Read from disk** — at each stage boundary, read `.ai/feature/<name>.md` and `.ai/knowledge/` from disk rather than relying on conversation history
 - **Mermaid diagrams** — all diagrams in Mermaid format
 - **Document change convention** — append-only with strikethrough and HTML comment metadata
+- **Decision register** — every decision (architecture, design, test strategy, scope changes, user preferences) is recorded in `.ai/knowledge/decisions.md`. Include context (feature/stage/step), options considered, and outcome. See [decisions.md](stages/decisions.md) for format.

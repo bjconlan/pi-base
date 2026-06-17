@@ -49,6 +49,7 @@ Canonical knowledge, samples, and reference data live under `.ai/knowledge/`:
 ├── README.md              # Overview of what knowledge is stored and how to use it
 ├── glossary.md            # Project-specific terms, definitions, and vernacular
 ├── architecture.md        # System architecture decisions and rationale
+├── decisions.md           # Decision register — every decision with context, options, and outcome
 ├── bibliography.md        # External references — maps URLs to local files in references/
 ├── samples/               # Example inputs, outputs, and usage patterns
 └── references/            # Saved copies of external docs, blog posts, RFCs
@@ -78,6 +79,7 @@ Over time, refine the knowledge base to improve future agent sessions:
 
 - When a concept requires repeated explanation, add it to `glossary.md`
 - When an architectural decision is revisited, update `architecture.md` with the rationale
+- Record every decision in `decisions.md` with context, options, and outcome
 - When definitions become abstract or unclear, raise this with the user and ask for clarification
 - When adding new patterns or conventions, document them for consistency
 

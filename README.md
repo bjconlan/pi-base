@@ -106,3 +106,5 @@ To support fossilscm or other scms in generall we need to adapt this away from e
 We need to identify a good way for sub agents to perform tasks. (perhaps worktree per sub-agent against main and they take tasks off the top of the list and perform prs in their created branches?)
 
 Secondary agent verification doesn't seem to be triggered or even asked for. This needs to be investigated.
+
+Review the documentation and remove specific tooling (these should be defined as part of the project this project provides workflow coordination for said tools; doesn't dictate them; although should ensure the tooling covers typical developement requirements such as linting/formatting/version control/tasks management etc)
