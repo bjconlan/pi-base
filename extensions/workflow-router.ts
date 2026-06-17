@@ -52,13 +52,12 @@ export default function (pi: ExtensionAPI) {
     if (_event.reason !== "startup" && _event.reason !== "new") return;
     if (!ctx.hasUI) return;
 
-    // If the session already has user or assistant messages, it's a continuation
+    // If the session already has content beyond the header, it's a continuation
     try {
       const entries = ctx.sessionManager.getEntries();
-      const hasContent = entries.some(
-        (e: any) => e.type === "user" || e.type === "assistant" || e.role === "user" || e.role === "assistant",
-      );
-      if (hasContent) return;
+      // The first entry is always the session header. Anything beyond that
+      // means this is a continued session with existing conversation.
+      if (entries.length > 1) return;
     } catch { /* non-fatal */ }
 
     const cwd = ctx.cwd;

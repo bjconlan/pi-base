@@ -98,3 +98,11 @@ Session logs are stored per-worktree in `.ai/history/`. Each `git worktree add` 
 | `/skill:assimilate-knowledge` | Research a topic across multiple sources (YouTube, Reddit, BlueSky, articles) for up-to-date information. |
 
 The response style guidelines are active automatically in every session — no action needed.
+
+## Future support and refinement
+
+To support fossilscm or other scms in generall we need to adapt this away from explicity using git and generalise the git flow style workflow which is currently used.
+
+We need to identify a good way for sub agents to perform tasks. (perhaps worktree per sub-agent against main and they take tasks off the top of the list and perform prs in their created branches?)
+
+Secondary agent verification doesn't seem to be triggered or even asked for. This needs to be investigated.
