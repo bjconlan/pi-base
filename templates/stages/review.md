@@ -31,7 +31,9 @@ Produce an outcomes section in the plan file. Append to `.ai/feature/<name>.md`:
 3. Run benchmarks one final time to confirm no regressions across all units
 4. Update the `.verify.md` file with final verification results, noting what passed and any exceptions
 5. Clean up any dead code or debug artifacts
-6. Update `.ai/` with any knowledge gained during this feature:
+6. Update project documentation — review `README.md` and any other user-facing docs for changes needed by this feature. Update installation steps, usage examples, configuration options, or API references as required.
+
+7. Update `.ai/` with any knowledge gained during this feature:
    - Finalise `.ai/feature/<name>.md` with outcomes and status
    - Add new terms, types, or patterns to `.ai/knowledge/glossary.md`
    - Update `.ai/knowledge/architecture.md` with decisions made or changed
