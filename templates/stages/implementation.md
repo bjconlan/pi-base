@@ -66,6 +66,16 @@ cat .ai/feature/<name>.md
 
 This avoids context drift as the conversation grows.
 
+#### Out-of-Scope Items
+
+If the user mentions ideas or tasks outside the current feature's scope:
+
+1. Scan all existing epics in `.ai/backlog/` to see if the item fits within any pending task. If so, add it as a subtask or note to that existing task.
+2. If no existing task fits, append the item to the current epic (second-highest index) as a new feature or task.
+3. If the user specifies a particular epic, add it there instead.
+
+Use the document change convention (strikethrough + HTML comment metadata) for all additions.
+
 #### Handling Spec Changes
 
 If the plan needs to change mid-development:
