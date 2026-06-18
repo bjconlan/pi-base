@@ -28,4 +28,3 @@ These apply to all stages:
 - **Mermaid diagrams** — all diagrams in Mermaid format
 - **Document change convention** — append-only with strikethrough and HTML comment metadata
 - **Decision register** — every decision (architecture, design, test strategy, scope changes, user preferences) is recorded in `.ai/knowledge/decisions.md`. Include context (feature/stage/step), options considered, and outcome. See [decisions.md](stages/decisions.md) for format.
-- **Dependencies are immutable** — never modify resolved dependency source files directly. If a dependency needs behavioural changes, apply patches in the build flow (e.g. `patch-package`, `postinstall` scripts, or fork the dependency and reference the fork). Otherwise, adapt the codebase that consumes the dependency rather than altering the dependency itself.
