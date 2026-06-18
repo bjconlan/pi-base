@@ -172,3 +172,4 @@ Format: `<prefix>/<short-snaked-description>`
 - When in doubt about a term or concept, check `glossary.md` first, then ask the user
 - Plans are living documents — update them as understanding evolves
 - Verification is not optional for any unit of work; each unit must define and pass a verification checkpoint
+- **Dependencies are immutable** — never modify resolved dependency source files directly. Use build-flow patches or adapt the consuming codebase instead.
