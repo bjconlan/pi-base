@@ -9,6 +9,7 @@ Ask the user questions to clarify the goal. Cover:
 - What are they trying to achieve?
 - Is there an existing issue, ticket, or PR to reference?
 - Are there any relevant docs, blog posts, GitHub projects, or commit SHAs to review?
+- What are the specific use cases this feature needs to cover? These will drive the design.
 - What does success look like? What are the acceptance criteria?
 - Are there constraints (time, dependencies, compatibility)?
 

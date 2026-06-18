@@ -14,6 +14,10 @@ Produce an outcomes section in the plan file. Append to `.ai/feature/<name>.md`:
 ### Changes from the original plan
 - ...
 
+### Use cases resolved
+- List each use case identified during planning and how the implementation addresses it
+- Note any use cases that changed, were dropped, or were added during development
+
 ### Verification results
 - All checkpoints passed: yes / no
 - Full test suite: passing / failing
