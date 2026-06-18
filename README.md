@@ -61,7 +61,7 @@ flowchart TD
     BRANCH_TYPE -->|chore| CHORE["Start implementation\nStage: implementation"]
     BRANCH_TYPE -->|main/master| MAIN{"Backlog\nfiles exist?"}
     MAIN -->|yes| BACKLOG["Read epics, find first with\nincomplete tasks, list to user"]
-    BACKLOG --> PICK_TASK["User picks a task,\ntypes /start-feature feature/name,\nfresh session starts automatically"]
+    BACKLOG --> PICK_TASK["User picks a task,\nagent creates branch,\ncontinues with planning workflow"]
     MAIN -->|no| BACKLOG_START["Suggest /skill:backlog-planning
 to define first epic"]
 
@@ -81,12 +81,6 @@ to define first epic"]
 ## Session Storage
 
 Session logs are stored per-worktree in `.ai/history/`. Each `git worktree add` creates a separate directory with its own history, giving natural per-branch session isolation.
-
-## Commands
-
-| Command | When to use |
-|---------|-------------|
-| `/start-feature <name>` | After picking a task from the backlog, type this to create the branch and start a fresh session. E.g. `/start-feature feature/add-auth` |
 
 ## Skills
 
@@ -108,3 +102,5 @@ We need to identify a good way for sub agents to perform tasks. (perhaps worktre
 Secondary agent verification doesn't seem to be triggered or even asked for. This needs to be investigated.
 
 Review the documentation and remove specific tooling (these should be defined as part of the project this project provides workflow coordination for said tools; doesn't dictate them; although should ensure the tooling covers typical developement requirements such as linting/formatting/version control/tasks management etc)
+
+Add configuration support for knowledge aggregation (setup authentication/login mechanism for sources requiring authentication etc)
