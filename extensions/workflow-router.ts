@@ -129,7 +129,7 @@ export default function (pi: ExtensionAPI) {
               `If all tasks in the current epic are complete, move to the next epic. ` +
               `If all epics are complete or no epics exist, ask the user if they'd like to run /skill:backlog-planning to define the next epic.\n\n` +
               `Once the user picks a task, create the branch with \`git checkout -b feature/<task-name>\`. ` +
-              `The new session will start automatically after \`git checkout -b feature/<task-name>\` creates the branch.`,
+              `A new session will start automatically on the new branch.`,
               { deliverAs: "steer" },
             );
             break;
