@@ -17,7 +17,7 @@ Note the findings in the plan file under a `## Impact` section. This ensures you
 
 Work through the units of work in order. For each unit:
 
-1. **Implement** the changes
+1. **Implement** the changes — never modify resolved dependency source files. If a dependency requires changes, apply patches in the build flow or adapt the consuming code.
 2. **Write tests** in parallel with implementation — exercise all branches and realistic type ranges (nulls, boundaries, common values) to surface issues early. Every added or changed line must have corresponding tests. Remove or update any tests covering removed functionality.
 3. **Verify** — run the verification checkpoint. Confirm all existing tests still pass alongside the new ones
 4. **Lint and format** — run the project's linter and formatter (if configured). If not configured, ask the user if they'd like to set them up. Never reformat unrelated code.
