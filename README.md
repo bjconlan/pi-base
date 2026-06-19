@@ -93,6 +93,22 @@ Session logs are stored per-worktree in `.ai/history/`. Each `git worktree add` 
 
 The response style guidelines are active automatically in every session — no action needed.
 
+## Testing
+
+After making changes to the package, run through the test scenarios in [`tests/scenarios.md`](tests/scenarios.md) to verify nothing is broken:
+
+1. Create a fresh test directory for each scenario that needs one
+2. Install the local package: `pi install /path/to/pi-base`
+3. Run the scenario steps and confirm expected behaviour
+4. Check the regression checks pass (things that should NOT happen)
+
+Key scenarios to verify after most changes:
+- **Scenario 2**: Main branch with backlog — the most complex interaction
+- **Scenario 5**: Continued session — must never trigger auto-workflow
+- **Scenario 8**: Response style — guidelines should appear in every session
+
+For extension code changes, `/reload` in an existing session is usually sufficient to test.
+
 ## Future support and refinement
 
 To support fossilscm or other scms in generall we need to adapt this away from explicity using git and generalise the git flow style workflow which is currently used.
