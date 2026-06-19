@@ -61,7 +61,7 @@ flowchart TD
     BRANCH_TYPE -->|chore| CHORE["Start implementation\nStage: implementation"]
     BRANCH_TYPE -->|main/master| MAIN{"Backlog\nfiles exist?"}
     MAIN -->|yes| BACKLOG["Read epics, find first with\nincomplete tasks, list to user"]
-    BACKLOG --> PICK_TASK["User picks a task,\nagent creates branch,\ncontinues with planning workflow"]
+    BACKLOG --> PICK_TASK["User picks a task,\nagent creates branch,\npi shuts down - user restarts"]
     MAIN -->|no| BACKLOG_START["Suggest /skill:backlog-planning
 to define first epic"]
 

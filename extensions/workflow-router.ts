@@ -11,16 +11,18 @@ import { join } from "node:path";
 import { execSync } from "node:child_process";
 
 export default function (pi: ExtensionAPI) {
-  // Update session name when branch changes mid-session, and start fresh
+  // Update session name when branch changes mid-session
   pi.on("tool_result", (evt, ctx) => {
     if (evt.toolName !== "bash" || evt.isError) return;
     const cmd = (evt.input.command as string) || "";
     const match = cmd.match(/git\s+checkout\s+(?:-b\s+)?(\S+)/);
     if (match) {
       pi.setSessionName(match[1]);
-      // If this was a new feature branch from backlog, start a fresh session
+      // Feature branch creation from backlog: shut down so user can restart
+      // fresh on the new branch. The workflow will start automatically.
       if (match[1].startsWith("feature/")) {
-        (ctx as any).newSession().catch(() => {});
+        ctx.ui.notify("Restart pi to continue on the new branch", "info");
+        ctx.shutdown();
       }
     }
   });
@@ -131,7 +133,7 @@ export default function (pi: ExtensionAPI) {
               `If all tasks in the current epic are complete, move to the next epic. ` +
               `If all epics are complete or no epics exist, ask the user if they'd like to run /skill:backlog-planning to define the next epic.\n\n` +
               `Once the user picks a task, create the branch with \`git checkout -b feature/<task-name>\`. ` +
-              `A new session will start automatically on the new branch.`,
+              `Pi will shut down after the branch is created. Restart pi to continue on the new branch - the planning workflow will start automatically.`,
               { deliverAs: "steer" },
             );
             break;
