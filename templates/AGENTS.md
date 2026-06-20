@@ -173,3 +173,4 @@ Format: `<prefix>/<short-snaked-description>`
 - Plans are living documents — update them as understanding evolves
 - Verification is not optional for any unit of work; each unit must define and pass a verification checkpoint
 - **Dependencies are immutable** — never modify resolved dependency source files directly. Use build-flow patches or adapt the consuming codebase instead.
+- **Schema migrations** — during prototyping and pre-v1, schema changes do not need migration scripts. After a public release or v1, any breaking schema change must be confirmed with the user and include a migration plan.
