@@ -192,7 +192,7 @@ If yes, prepare a review context bundle (omit `.ai/history/`):
 # Build review context from the plan file and knowledge base
 cat .ai/feature/<name>.md > /tmp/review-context.md
 echo -e "\n---\n# Knowledge Base\n---" >> /tmp/review-context.md
-cat .ai/knowledge/glossary.md .ai/knowledge/architecture.md .ai/knowledge/decisions.md >> /tmp/review-context.md 2>/dev/null
+cat README.md AGENTS.md .ai/knowledge/glossary.md .ai/knowledge/architecture.md .ai/knowledge/decisions.md >> /tmp/review-context.md 2>/dev/null
 
 pi -p "Review this development plan for gaps, inconsistencies, and risks.\n\nContext includes the plan file and relevant knowledge base entries (.ai/history/ excluded).\n\nFocus on:\n- Are the data types and API contracts well-defined?\n- Are the units of work small enough for iteration?\n- Are verification checkpoints specific and testable?\n- Are there missing edge cases or dependencies?\n- Is the scope realistic for a single session?\n\nOutput a concise list of issues (if any) and recommendations." < /tmp/review-context.md
 ```
@@ -264,7 +264,7 @@ If yes, build a review context bundle (omit `.ai/history/`):
 ```bash
 cat .ai/feature/<name>.md > /tmp/review-context.md
 echo -e "\n---\n# Architecture Context\n---" >> /tmp/review-context.md
-cat .ai/knowledge/architecture.md .ai/knowledge/decisions.md >> /tmp/review-context.md 2>/dev/null
+cat README.md AGENTS.md .ai/knowledge/architecture.md .ai/knowledge/decisions.md >> /tmp/review-context.md 2>/dev/null
 
 pi -p "Review this architectural prototype against the plan and architecture context.\n\nContext includes the plan file and relevant knowledge base entries (.ai/history/ excluded).\n\nFocus on:\n- Does the implementation match the specified API/contract layer?\n- Are the data types consistent with the plan?\n- Are there any design issues that would cause problems in implementation?\n- Is the prototype minimal enough to iterate on?\n\nOutput issues found, if any." < /tmp/review-context.md
 ```
