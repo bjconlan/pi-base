@@ -47,11 +47,15 @@ After a unit is verified, ask the user:
 
 > "Would you like an independent review of this unit against the plan?"
 
-If yes:
+If yes, build a review context bundle (omit `.ai/history/`):
 
 ```bash
 git diff HEAD~1 > /tmp/unit-review.diff
-pi -p "Review this diff against the plan's verification strategy.\n\nPlan context: $(head -30 .ai/feature/<name>.md)\n\nFocus on:\n- Does the implementation match the spec in the plan?\n- Are all branches exercised? Are edge cases handled?\n- Is there dead code or unused paths?\n- Do the tests validate what they claim to validate?\n- Are there any regressions in existing behaviour?\n- Are there benchmark regressions?\n\nOutput issues found, if any." < /tmp/unit-review.diff
+cat .ai/feature/<name>.md > /tmp/review-context.md
+echo -e "\n---\n# Knowledge Context\n---\n" >> /tmp/review-context.md
+cat .ai/knowledge/architecture.md .ai/knowledge/decisions.md .ai/knowledge/glossary.md >> /tmp/review-context.md 2>/dev/null
+
+pi -p "Review this diff against the plan's verification strategy.\n\nContext includes the plan file, relevant knowledge base entries (.ai/history/ excluded), and the diff.\n\nFocus on:\n- Does the implementation match the spec in the plan?\n- Are all branches exercised? Are edge cases handled?\n- Is there dead code or unused paths?\n- Do the tests validate what they claim to validate?\n- Are there any regressions in existing behaviour?\n- Are there benchmark regressions?\n\nOutput issues found, if any." < /tmp/review-context.md
 ```
 
 If issues are found, fix them before marking the unit complete.
