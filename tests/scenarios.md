@@ -159,3 +159,23 @@ Manual test cases to verify the package works as expected. Run through these aft
 - Should handle `x` and `spotify` services
 - Unknown services should return error
 - Token cached for session duration
+
+---
+
+## Scenario 10: Regression Bisect
+
+**Setup:** A project with git history where a feature that previously worked is now broken. Fresh session or continued session where the user reports the issue.
+
+**Expected behaviour:**
+1. User reports something stopped working
+2. Agent uses `/skill:regression-bisect` instead of guessing
+3. Agent asks when it last worked to establish known-good commit
+4. Agent runs `git bisect` with the test that demonstrates the failure
+5. When bisect finds the regression commit, agent examines the diff
+6. Agent implements the fix based on identified cause
+7. Agent commits with message referencing the regression commit SHA
+
+**Regression checks:**
+- Agent must not propose guesses at the cause before bisecting
+- If no known-good commit can be identified, agent should ask user for one
+- If the test is not scriptable, agent should guide user through manual bisect steps

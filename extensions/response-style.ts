@@ -77,6 +77,10 @@ Only omit if the user explicitly asks not to include them. The co-author list re
 - Prefer data-driven and functional style. Use data literals to make code self-documenting and easy to reason about.
 - Avoid implicit mutations. If mutation is necessary, make it explicit and obvious at the call site.
 - Favor pure functions, immutable data structures, and composition over inheritance or mutable state.
+
+## Regression Handling
+
+If something stopped working that previously worked, **do not guess.** Stop immediately. Use `/skill:regression-bisect` to find the exact commit that introduced the regression via `git bisect`. Guessing at the cause without evidence wastes time and LLM credits.
 `;
 
     return {

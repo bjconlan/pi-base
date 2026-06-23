@@ -129,6 +129,10 @@ Before implementing a solution that involves:
 
 Use web search if available and the user has enabled it. Keep research proportionate to the task — a full Google session is not needed to look up a function signature.
 
+### Regression Handling
+
+If something stopped working that previously worked, **do not guess.** Stop immediately and use `/skill:regression-bisect` to find the exact commit that introduced the regression via `git bisect`. Guessing wastes time and LLM credits.
+
 ## Guardrails
 
 ### Tool Enforcement
