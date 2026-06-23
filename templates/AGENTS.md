@@ -180,5 +180,6 @@ Format: `<prefix>/<short-snaked-description>`
 - Plans are living documents — update them as understanding evolves
 - Verification is not optional for any unit of work; each unit must define and pass a verification checkpoint
 - **Dependencies are immutable** — never modify resolved dependency source files directly. Use build-flow patches or adapt the consuming codebase instead.
+- **Squash merge to main** — feature branches should be squash-merged into main/master to keep history clean. This collapses all feature branch commits into a single commit on the target branch.
 - **Schema migrations** — during prototyping and pre-v1, schema changes do not need migration scripts. After a public release or v1, any breaking schema change must be confirmed with the user and include a migration plan.
 - **No binary files** — never commit binary files (images, compiled binaries, archives, etc.) without explicit user confirmation. Ask before adding any binary to a commit.

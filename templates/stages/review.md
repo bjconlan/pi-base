@@ -58,8 +58,8 @@ Ask the user to review the code:
 **Do not merge or push unless the user explicitly asks you to.**
 
 - If the user requests changes, make them, re-run tests and benchmarks, and return to review
-- If the user approves, ask: "Would you like me to push and merge this branch, or leave it for you to merge later?"
-- If they say merge: push the branch and, if they confirm, merge into the target branch
+- If the user approves, ask: "Would you like me to push and squash-merge this branch, or leave it for you to merge later?"
+- If they say merge: push the branch and, if they confirm, squash-merge into the target branch (`git merge --squash feature/<name> && git commit -m "feature: <summary>"`)
 - If they say leave it: note the branch name for later
 
 ### 14. Post-Merge Cleanup
