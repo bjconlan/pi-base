@@ -66,10 +66,7 @@ export default function (pi: ExtensionAPI) {
     // If the session already has user or assistant messages, it's a continuation
     try {
       const entries = ctx.sessionManager.getEntries();
-      const hasContent = entries.some(
-        (e: any) => e.type === "user" || e.type === "assistant" || e.role === "user" || e.role === "assistant",
-      );
-      if (hasContent) return;
+      if (entries.length > 2) return;
     } catch { /* non-fatal */ }
 
     const cwd = ctx.cwd;

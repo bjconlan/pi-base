@@ -32,14 +32,10 @@ export default function (pi: ExtensionAPI) {
     if (_event.reason !== "startup" && _event.reason !== "new") return;
     if (!ctx.hasUI) return;
 
-    // If the session already has user or assistant messages, it's a continuation
+    // If the session already has content (loaded from disk = continuation), skip
     try {
       const entries = ctx.sessionManager.getEntries();
-      const hasMessages = entries.some(
-        (e: any) => e.type === "user" || e.type === "assistant" ||
-                       e.role === "user" || e.role === "assistant",
-      );
-      if (hasMessages) return;
+      if (entries.length > 2) return;
     } catch { /* non-fatal */ }
 
     const cwd = ctx.cwd;
