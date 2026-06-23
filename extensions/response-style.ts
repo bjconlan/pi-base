@@ -80,7 +80,7 @@ Only omit if the user explicitly asks not to include them. The co-author list re
 
 ## Regression Handling
 
-If something stopped working that previously worked, **do not guess.** Stop immediately. Use `/skill:regression-bisect` to find the exact commit that introduced the regression via `git bisect`. Guessing at the cause without evidence wastes time and LLM credits.
+If something stopped working that previously worked, **do not guess.** Stop immediately. Use \`/skill:regression-bisect\` to find the exact commit that introduced the regression via \`git bisect\`. Guessing at the cause without evidence wastes time and LLM credits.
 `;
 
     return {
