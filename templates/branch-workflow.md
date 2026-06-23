@@ -29,3 +29,4 @@ These apply to all stages:
 - **Document change convention** — append-only with strikethrough and HTML comment metadata
 - **Decision register** — every decision (architecture, design, test strategy, scope changes, user preferences) is recorded in `.ai/knowledge/decisions.md`. Include context (feature/stage/step), options considered, and outcome. See [decisions.md](stages/decisions.md) for format.
 - **Schema migrations** — during prototyping and pre-v1, schema changes do not need migration scripts. After a public release or v1 API release, any non-backward-compatible schema change must be discussed with the user first and include a migration plan.
+- **No binary files** — never commit binary files (images, compiled binaries, archives, etc.) without explicit user confirmation. If a binary must be committed, ask the user first.
