@@ -152,6 +152,9 @@ These rules constrain tool usage to prevent mistakes. They apply regardless of t
 - Prefer `--dry-run` or `--check` flags when available for destructive operations
 - Do not run package install commands (`npm install`, `pip install`, etc.) without user confirmation — they modify the project's dependency tree
 
+**General:**
+- Never commit binary files (images, compiled binaries, archives, etc.) without explicit user confirmation
+
 ## Branch Naming
 
 Use the following prefixes for branches:
@@ -174,3 +177,4 @@ Format: `<prefix>/<short-snaked-description>`
 - Verification is not optional for any unit of work; each unit must define and pass a verification checkpoint
 - **Dependencies are immutable** — never modify resolved dependency source files directly. Use build-flow patches or adapt the consuming codebase instead.
 - **Schema migrations** — during prototyping and pre-v1, schema changes do not need migration scripts. After a public release or v1, any breaking schema change must be confirmed with the user and include a migration plan.
+- **No binary files** — never commit binary files (images, compiled binaries, archives, etc.) without explicit user confirmation. Ask before adding any binary to a commit.
