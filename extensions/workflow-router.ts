@@ -26,10 +26,12 @@ export default function (pi: ExtensionAPI) {
     if (_event.reason !== "startup" && _event.reason !== "new") return;
     if (!ctx.hasUI) return;
 
-    // If the session already has content (loaded from disk = continuation), skip
+    // If the session already has content (continued session), skip auto-workflow
     try {
       const entries = ctx.sessionManager.getEntries();
-      if (entries.length > 2) return;
+      // Fresh sessions have 1-3 entries (header, system messages).
+      // Continued sessions have many more (the full conversation).
+      if (entries.length > 3) return;
     } catch { /* non-fatal */ }
 
     const cwd = ctx.cwd;
