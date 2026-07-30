@@ -1,6 +1,6 @@
 # @bjconlan/pi-base
 
-Personal pi preferences and configuration package.
+Personal pi preferences and configuration package. I'm not taking upstream changes so please fork and make it your own. (Although there is an annoying state where files file-hash-guard is triggered when it shouldn't be can be annoying. I think the pi agent has actually fixed this issue anyway so can perhaps be removed, along with the oauth-resolver which I dont think ever worked - its on my todo list)
 
 ## Contents
 
