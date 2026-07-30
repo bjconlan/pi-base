@@ -79,7 +79,7 @@ to define first epic"]
 
 ## Session Storage
 
-Session logs are stored per-worktree in `.ai/history/`. Each `git worktree add` creates a separate directory with its own history, giving natural per-branch session isolation.
+Session logs are stored in `.pi/history/`, which is gitignored as part of `.pi/`. This keeps session history local to your machine while letting `.ai/` (knowledge base, plans, decisions) remain version-controlled.
 
 ## Skills
 
