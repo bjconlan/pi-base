@@ -10,7 +10,6 @@ Personal pi preferences and configuration package. I'm not taking upstream chang
 | **Extension** | `extensions/workflow-router.ts` | On new sessions, detects the git branch and auto-starts the appropriate workflow (planning for feature, implementation for hotfix and chore). |
 | **Extension** | `extensions/file-hash-guard.ts` | Guards write/edit calls — warns if a file changed externally since the agent last read it, and asks for confirmation before overwriting. |
 | **Extension** | `extensions/response-style.ts` | Automatically injects response style guidelines, co-author convention, and coding style preferences into every session's system prompt. |
-| **Extension** | `extensions/oauth-resolver.ts` | Resolves OAuth/bearer tokens for external service APIs (X, Spotify) via env vars or user prompt. Used by assimilate-knowledge skill. |
 | **Skill** | `skills/backlog-planning/SKILL.md` | Agile epic/feature/task management with indexed backlog files in `.ai/backlog/`. |
 | **Skill** | `skills/explain-to-me/SKILL.md` | Comprehension check — the agent describes back what it understood before building on foundational information. |
 | **Skill** | `skills/educate-me/SKILL.md` | Teaches code from first principles, saves tutorials to `.ai/knowledge/references/`. |

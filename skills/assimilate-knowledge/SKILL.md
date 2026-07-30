@@ -99,19 +99,7 @@ General web search for recent technical content:
 
 ### X and Spotify podcasts
 
-These platforms require API credentials. Use the `resolve_auth` tool (from the oauth-resolver extension) to check for credentials and get the auth header:
-
-```
-# The agent calls: resolve_auth(service: "x", promptUser: true)
-# If a token is found, it returns the Authorization header to use with curl
-# Then: curl -s -H "<auth-header>" "https://api.x.com/2/tweets/search/recent?query={topic}&max_results=10"
-
-# For Spotify:
-# resolve_auth(service: "spotify", promptUser: true)
-# Note: Spotify requires client_id + client_secret via OAuth, not a simple token
-```
-
-If credentials aren't available, the other sources (YouTube, Reddit, BlueSky, articles) usually cover most topics.
+These platforms require API credentials. Check environment variables (`TWITTER_BEARER_TOKEN`, `X_BEARER_TOKEN`) for X auth, or a `SPOTIFY_CLIENT_ID`/`SPOTIFY_CLIENT_SECRET` pair for Spotify, and use them directly with curl. If credentials aren't available, the other sources (YouTube, Reddit, BlueSky, articles) usually cover most topics.
 
 ---
 
