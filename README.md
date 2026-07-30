@@ -111,7 +111,7 @@ For extension code changes, `/reload` in an existing session is usually sufficie
 
 ## Future support and refinement
 
-To support fossilscm or other scms in generall we need to adapt this away from explicity using git and generalise the git flow style workflow which is currently used.
+To support fossilscm or other scms in general we need to adapt this away from explicity using git and generalise the git flow style workflow which is currently used.
 
 We need to identify a good way for sub agents to perform tasks. (perhaps worktree per sub-agent against main and they take tasks off the top of the list and perform prs in their created branches?)
 
