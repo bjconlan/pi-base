@@ -110,4 +110,26 @@ export default function (pi: ExtensionAPI) {
 			fileHashes.set(filePath, hash);
 		}
 	});
+
+	// ---------------------------------------------------------------------------
+	//  Bash result — refresh hashes for all tracked files
+	//
+	//  bash mutations (sed -i, git checkout, codegen, etc.) are invisible to the
+	//  read/write/edit tracking above, so a file edited through bash then edited
+	//  again with the edit tool would false-positive as "changed externally".
+	//  Re-hashing every tracked file after any bash command keeps the cache in
+	//  sync with whatever bash touched. Tracked set is small (files the agent
+	//  has read/written this session), so this is cheap.
+	// ---------------------------------------------------------------------------
+	pi.on("tool_result", async (event) => {
+		if (event.toolName !== "bash") return;
+		for (const [path] of fileHashes) {
+			const hash = computeHash(path);
+			if (hash) {
+				fileHashes.set(path, hash);
+			} else {
+				fileHashes.delete(path); // file was removed by bash
+			}
+		}
+	});
 }
