@@ -148,6 +148,7 @@ Once written, the plan and verification documents are **append-only.** Never del
 
 - **Redactions:** Strikethrough the original text, add the replacement below, and prefix both with an HTML comment containing the date-time and reason
 - **Additions:** Insert new content inline where it belongs, preceded by an HTML comment with the date-time and reason
+- **Dates are creation dates:** always date new entries (HTML-comment annotations, decision-register entries, plan/verify updates) with **today's date** — run `date -u +%Y-%m-%d` (UTC); never copy a date from nearby existing entries. Historical records keep their original dates.
 
 ```markdown
 <!-- 2026-06-11T14:30: Scope narrowed after user review — original approach exceeded session budget -->
