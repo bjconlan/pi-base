@@ -164,6 +164,8 @@ When the user determines the current epic is done:
    git add .ai/backlog/ && git commit -m "backlog: complete <epic-name>"
    ```
 
+Note: the review stage template (templates/stages/review.md step 14) makes backlog sync a required step after any merge, and the workflow-router flags epics whose tasks are all checked but which lack the `COMPLETE` marker (tests/scenarios.md Scenario 11). If the router flags one, run this procedure rather than starting new work.
+
 ---
 
 ## 7. Notify User

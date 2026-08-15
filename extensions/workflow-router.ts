@@ -6,7 +6,7 @@
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { execSync } from "node:child_process";
 
@@ -111,8 +111,24 @@ export default function (pi: ExtensionAPI) {
       default:
         // On main/master, check for unfinished backlog items
         if (branch === "main" || branch === "master") {
-          const backlogFiles = listBacklogFiles(join(cwd, ".ai", "backlog"));
+          const backlogDir = join(cwd, ".ai", "backlog");
+          const backlogFiles = listBacklogFiles(backlogDir);
           if (backlogFiles.length) {
+            // An epic whose tasks are all checked but that lacks the COMPLETE marker
+            // means the work was delivered without the backlog bookkeeping.
+            const stale = findStaleEpic(backlogDir);
+            if (stale) {
+              await new Promise((r) => setTimeout(r, 800));
+              ctx.ui.notify(`Epic ${stale}: all tasks done but backlog not marked complete`, "warning");
+              pi.sendUserMessage(
+                `Epic ${stale} in \`.ai/backlog/\` has all tasks checked but is not marked complete (progress ≠ 100% / no COMPLETE marker). ` +
+                `This usually means the epic was delivered but the backlog bookkeeping was skipped.\n\n` +
+                `Run the epic-completion procedure (/skill:backlog-planning §6): mark progress 100% with a COMPLETE <date> marker, ` +
+                `add completion notes, promote the next epic, and commit. Confirm with the user before doing so.`,
+                { deliverAs: "steer" },
+              );
+              break;
+            }
             // Has at least one epic — check for incomplete tasks
             await new Promise((r) => setTimeout(r, 800));
             ctx.ui.notify("On main branch with backlog items — checking tasks", "info");
@@ -160,4 +176,23 @@ function listBacklogFiles(backlogDir: string): string[] {
   } catch {
     return [];
   }
+}
+
+// An epic is stale when every task checkbox is checked but its status has no
+// 100%/COMPLETE marker — i.e. the work merged but the backlog was never updated.
+function findStaleEpic(backlogDir: string): string | null {
+  try {
+    const files = readdirSync(backlogDir)
+      .filter((f) => f.endsWith(".md"))
+      .sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+    for (const f of files) {
+      const content = readFileSync(join(backlogDir, f), "utf-8");
+      const unchecked = (content.match(/^\s*- \[ \]/gm) || []).length;
+      const checked = (content.match(/^\s*- \[x\]/gm) || []).length;
+      if (unchecked === 0 && checked > 0 && !/100%|\bCOMPLETE\b/i.test(content)) {
+        return f.replace(/\.md$/, "");
+      }
+    }
+  } catch { /* non-fatal */ }
+  return null;
 }

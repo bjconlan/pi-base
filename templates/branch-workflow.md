@@ -16,7 +16,7 @@ This document defines the stages available and how they compose per branch type.
 
 **Implementation:** Work through tasks with code and tests. Ensure added code has coverage and removed code has its tests cleaned up. Run benchmarks for performance-sensitive changes. Commit with messages referencing the plan file.
 
-**Review:** Produce an outcomes document against the original plan. Run final tests and benchmarks. Verify knowledge base updates (glossary, architecture, references, bibliography, feature plan). Present to user for review. Merge only on explicit user approval.
+**Review:** Produce an outcomes document against the original plan. Run final tests and benchmarks. Verify knowledge base updates (glossary, architecture, references, bibliography, feature plan). Present to user for review. Merge only on explicit user approval. After merging, sync the backlog epic file — mark the task done and, if no tasks remain, complete the epic (see [review.md](stages/review.md) step 14). The backlog file must never lag the git history.
 
 Users can define additional branch types per project in `AGENTS.md`.
 

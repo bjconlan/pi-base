@@ -59,10 +59,29 @@ Ask the user to review the code:
 
 - If the user requests changes, make them, re-run tests and benchmarks, and return to review
 - If the user approves, ask: "Would you like me to push and squash-merge this branch, or leave it for you to merge later?"
-- If they say merge: push the branch and, if they confirm, squash-merge into the target branch (`git merge --squash feature/<name> && git commit -m "feature: <summary>"`). Then mark the task as done in the epic file (`.ai/backlog/<epic>.md`) — update the task status to `done`.
+- If they say merge: push the branch and, if they confirm, squash-merge into the target branch (`git merge --squash feature/<name> && git commit -m "feature: <summary>"`).
 - If they say leave it: note the branch name for later
 
-### 14. Post-Merge Cleanup
+### 14. Backlog Sync (required)
+
+After a merge, the backlog epic file must reflect the work before this session ends:
+
+1. Find the task in `.ai/backlog/<epic>.md` matching this branch and mark it done — checkbox `[x]`, status `(backlog)`/`(in-progress)` → `(done)`.
+2. Check whether the epic is now fully complete — no remaining unchecked tasks:
+
+   ```bash
+   rg -c '^\s*- \[ \]' .ai/backlog/<epic>.md   # 0 = all tasks done
+   ```
+
+3. If all tasks are done, complete the epic per `/skill:backlog-planning` §6:
+   - Progress → 100% with a `COMPLETE <date>` marker (date discipline: today's UTC date, `date -u +%Y-%m-%d`)
+   - Add a completion-notes section summarising what landed and any deviations
+   - The next epic (highest index) becomes current; create a new next-epic placeholder if needed
+   - Commit: `backlog: complete <epic-name>`
+
+**This step is not optional.** An epic whose tasks have all merged but whose file still shows `[ ]`/`(backlog)` is flagged as stale by the workflow-router on the next main-branch session. Deliver the work *and* the bookkeeping together.
+
+### 15. Post-Merge Cleanup
 
 After the branch is merged:
 

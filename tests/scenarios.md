@@ -179,3 +179,22 @@ Manual test cases to verify the package works as expected. Run through these aft
 - Agent must not propose guesses at the cause before bisecting
 - If no known-good commit can be identified, agent should ask user for one
 - If the test is not scriptable, agent should guide user through manual bisect steps
+
+---
+
+## Scenario 11: Completed Epic Not Finalized (stale backlog)
+
+**Setup:** Project has `.ai/backlog/` where an epic has all task checkboxes marked `[x]` but its status lacks a `100%`/`COMPLETE` marker (e.g. tasks merged in past sessions without running the backlog sync). On `main` branch. Fresh session.
+
+**Expected behaviour:**
+1. Start `pi` (fresh session)
+2. Workflow-router detects `main` branch
+3. `findStaleEpic` finds the epic: zero unchecked tasks, ≥1 checked task, no completion marker
+4. Agent is told the epic appears delivered-but-unfinalized and steered to run the epic-completion procedure (backlog-planning §6) with user confirmation — **not** to the usual task-picker
+5. After the user confirms, progress → 100% + `COMPLETE <date>`, next epic promoted
+
+**Regression checks:**
+- Not flagged once the epic is properly marked complete (marker present)
+- Not flagged for next-epic placeholders with no task checkboxes
+- Not flagged for epics that still have unchecked tasks (normal in-progress state)
+- Should not trigger on feature/hotfix/chore branches
